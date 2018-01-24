@@ -5,7 +5,10 @@
 + DOCTYPE文档类型
 + 严格模式和混杂模式的区别
 + 浏览器的标准模式与怪异模式
-+ cookie
++ Cookie
++ Session
++ GET/POST
++ HTML5新元素
 
 ## CSS
 - 各种居中方法
