@@ -10,9 +10,11 @@
 + Session
 + GET/POST
 + HTML5新元素
++ HTTP状态码
 
 ## CSS
 - 4种定位方式的区别
+- 浮动
 - 各种居中方法
 - 盒模型
 
@@ -27,6 +29,20 @@
 - [transition动画](https://github.com/tozlam/VueDemo/tree/master/transition)
 - [router路由](https://github.com/tozlam/VueDemo/tree/master/router)
 
+## Webpack
+
 ## 计算机网络
 * TCP和UDP的工作流程及特点
 * http处理过程
+
+## 设计模式
+- 观察者模式
+- 策略模式
+- 工厂模式
+- 抽象工厂模式
+- 命令模式
+
+## 算法
+
+## 数据结构
+
