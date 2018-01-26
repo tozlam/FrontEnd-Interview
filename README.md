@@ -1,7 +1,9 @@
 # FrontEnd-Interview
 前端知识体系总结及部分重点笔记
 
-## HTML
+## HTML / 计算机网络
++ TCP和UDP的工作流程及特点
++ HTTP处理过程
 + 浏览器工作原理
 + DOCTYPE文档类型
 + 严格模式和混杂模式的区别
@@ -25,24 +27,22 @@
 
 ### ECMAScript6
 
-### Vue.js
+### Vue.js / Webpack
 - [transition动画](https://github.com/tozlam/VueDemo/tree/master/transition)
 - [router路由](https://github.com/tozlam/VueDemo/tree/master/router)
+- [loader](https://github.com/tozlam/VueDemo/tree/master/loader)
 
-## Webpack
 
-## 计算机网络
-* TCP和UDP的工作流程及特点
-* http处理过程
 
-## 设计模式
+## [设计模式](https://github.com/tozlam/DesignPattern)
 - 观察者模式
 - 策略模式
 - 工厂模式
 - 抽象工厂模式
 - 命令模式
 
-## 算法
+## 算法/数据结构
+- 剑指Offer
 
-## 数据结构
+
 
