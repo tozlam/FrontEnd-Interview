@@ -8,7 +8,7 @@
 + DOCTYPE文档类型
 + 严格模式和混杂模式的区别
 + 浏览器的标准模式与怪异模式
-+ Cookie
++ [Cookie](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/Cookie.md)
 + Session
 + GET/POST
 + HTML5新元素
