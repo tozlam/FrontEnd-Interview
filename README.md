@@ -22,9 +22,14 @@
 
 
 ## JavaScript
++ 5种基本类型(Undefined、Null、Boolean、Number、String)【ES6新增Symbol】
 + 函数
-+ 创建对象：工厂模式-构造模式-原型模式
-+ 继承：原型链
++ 创建对象：工厂模式-构造函数模式-原型模式
++ 继承：原型链-借用构造函数-组合继承
++ BOM(window对象、locatio对象、navigator对象、screen对象、history对象)
++ 节点层次
++ DOM操作技术(动态脚本、动态样式)
++ 事件
 
 ### ECMAScript6
 
