@@ -15,11 +15,11 @@
   - 如果这些数据每个请求都要发给服务端，浏览器的自动处理就大大免去了重复操作。
   
   ## cookie的属性选项
-  cookie选项有：expires、domain、path、secure、httponly
+  `cookie选项有：expires、domain、path、secure、httponly`
   <br>在设置任意一个cookie时都可以设置这些属性，也可以不设置；不设置则默认使用默认属性。<br>属性之间由一个分号和一个空格隔开。
   
 #### expires
-- expires设置了cookie的失效时间。设置了expires，浏览器会把cookie保存在硬盘上。
+- `expires设置了cookie的失效时间。`设置了expires，浏览器会把cookie保存在硬盘上。
 - expires必须是GMT格式的日期（可通过new Date().toGMTString()或new Date().toUTCString()获得。
 
 - 对于失效的cookie浏览器会清空。
@@ -30,12 +30,12 @@
 而max-age 的值是一个以秒为单位时间段（cookie失效时刻= 创建时刻+ max-age）。
 
 #### domain 和 path
-domain选项用来设置cookie该发到哪个域名。<br>
+`domain选项用来设置cookie该发到哪个域名。`<br>
 
-path选项用来设置cookie该发往哪个路径。
+`path选项用来设置cookie该发往哪个路径。`
 
     e.g:cookie 设置为domain=tozlam.cn; path=/pub; 
     表示：若请求的地址域名是tozlam.cn(或其子域如cat.tozlam.cn)，
     路径是“/pub”(或其下的任一子目录如/pub/example)时，浏览器才会将这个cookie自动添加到请求头部中。
     
-    所以domain和path两个选项共同决定了cookie何时被浏览器自动添加到请求头部中发送出去。 如果没有设置这两个选项，则会使用默认值。`domain的默认值为设置该cookie的网页所在的域名，path默认值为设置该cookie的网页所在的目录。`
+  所以domain和path两个选项共同决定了cookie何时被浏览器自动添加到请求头部中发送出去。 如果没有设置这两个选项，则会使用默认值。`domain的默认值为设置该cookie的网页所在的域名，path默认值为设置该cookie的网页所在的目录。`
