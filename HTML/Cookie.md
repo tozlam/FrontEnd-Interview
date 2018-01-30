@@ -17,3 +17,14 @@
   ## cookie的属性选项
   cookie选项有：expires、domain、path、secure、httponly
   <br>在设置任意一个cookie时都可以设置这些属性，也可以不设置；不设置则默认使用默认属性。<br>属性之间由一个分号和一个空格隔开。
+  
+#### expires
+- expires设置了cookie的失效时间。设置了expires，浏览器会把cookie保存在硬盘上。
+- expires必须是GMT格式的日期（可通过new Date().toGMTString()或new Date().toUTCString()获得。
+
+- 对于失效的cookie浏览器会清空。
+- 如果没有设置该选项，则默认有效期为session，即会话cookie。这种cookie在浏览器关闭后就没有了。
+
+- expires 是 http/1.0协议中的选项，在新的http/1.1协议中expires已经由 max-age 选项代替，
+两者的作用都是限制cookie 的有效时间。expires的值是一个时间点（cookie失效时刻= expires），
+而max-age 的值是一个以秒为单位时间段（cookie失效时刻= 创建时刻+ max-age）。
