@@ -28,3 +28,14 @@
 - expires 是 http/1.0协议中的选项，在新的http/1.1协议中expires已经由 max-age 选项代替，
 两者的作用都是限制cookie 的有效时间。expires的值是一个时间点（cookie失效时刻= expires），
 而max-age 的值是一个以秒为单位时间段（cookie失效时刻= 创建时刻+ max-age）。
+
+#### domain 和 path
+domain选项用来设置cookie该发到哪个域名。<br>
+
+path选项用来设置cookie该发往哪个路径。
+
+    e.g:cookie 设置为domain=tozlam.cn; path=/pub; 
+    表示：若请求的地址域名是tozlam.cn(或其子域如cat.tozlam.cn)，
+    路径是“/pub”(或其下的任一子目录如/pub/example)时，浏览器才会将这个cookie自动添加到请求头部中。
+    
+    所以domain和path两个选项共同决定了cookie何时被浏览器自动添加到请求头部中发送出去。 如果没有设置这两个选项，则会使用默认值。`domain的默认值为设置该cookie的网页所在的域名，path默认值为设置该cookie的网页所在的目录。`
