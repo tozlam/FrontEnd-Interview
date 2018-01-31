@@ -30,12 +30,18 @@
 而max-age 的值是一个以秒为单位时间段（cookie失效时刻= 创建时刻+ max-age）。
 
 #### domain 和 path
-`domain选项用来设置cookie该发到哪个域名。`<br>
+- `domain选项用来设置cookie该发到哪个域名。`<br>
 
-`path选项用来设置cookie该发往哪个路径。`
+- `path选项用来设置cookie该发往哪个路径。`
 
     e.g:cookie 设置为domain=tozlam.cn; path=/pub; 
     表示：若请求的地址域名是tozlam.cn(或其子域如cat.tozlam.cn)，
     路径是“/pub”(或其下的任一子目录如/pub/example)时，浏览器才会将这个cookie自动添加到请求头部中。
     
   所以domain和path两个选项共同决定了cookie何时被浏览器自动添加到请求头部中发送出去。 如果没有设置这两个选项，则会使用默认值。`domain的默认值为设置该cookie的网页所在的域名，path默认值为设置该cookie的网页所在的目录。`
+  
+  #### secure 
+- `secure用来设置cookie只在确保安全的请求中才会发送`
+  
+- 当请求是https或其他安全协议时，包含secure选项的cookie才能被发送到服务器。
+- 默认cookie不会带secure选项，所以默认https/http协议的请求，cookie都会发送服务器。
