@@ -45,3 +45,7 @@
   
 - 当请求是https或其他安全协议时，包含secure选项的cookie才能被发送到服务器。
 - 默认cookie不会带secure选项，所以默认https/http协议的请求，cookie都会发送服务器。
+- 但secure选项只是限定了在安全情况下才可以传输给服务器，但不代表看不到cookie。
+
+- 如果想在网页中通过js去设置secure类型的cookie，必须保证网页是https协议的。
+
