@@ -13,6 +13,7 @@
 + GET/POST
 + [HTML5新元素](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/H5%E6%96%B0%E5%A2%9E%E5%85%83%E7%B4%A0.md)
 + HTTP状态码
++ WebStorage
 
 ## CSS
 - 4种定位方式的区别
