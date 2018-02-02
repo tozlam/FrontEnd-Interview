@@ -13,6 +13,10 @@
   存储在cookie中的数据，每次都会被自动放在http请求中。
   - 如果这些数据并不是每个请求都需要发给服务端的数据，浏览器的自动处理显然增加了开销。
   - 如果这些数据每个请求都要发给服务端，浏览器的自动处理就大大免去了重复操作。
+  ## cookie的格式
+  可以通过js原生API获取cookie：document.cookie();
+  
+  返回一个字符串，由key=value键值对组成，键值对之间由一个分号和一个空格隔开。
   
   ## cookie的属性选项
   `cookie选项有：expires、domain、path、secure、httponly`
@@ -66,3 +70,34 @@
     这段script脚本做的事情是：通过document.cookie读取了用户身份验证相关的 cookie，
     并将这些 cookie 发送到了攻击者的服务器。攻击者轻而易举就拿到了用户身份验证信息，
     于是就可以摇摇大摆地冒充此用户访问你的服务器了（因为攻击者有合法的用户身份验证信息，所以会通过你服务器的验证）。
+    
+## 如何设置cookie
+- `cookie可以由服务端来设置，也可由客户端来设置`
+
+1.服务端设置
+
+    不管你是请求一个资源文件（如 html/js/css/图片），还是发送一个ajax请求，服务端都会返回response。
+    而response header中有一项叫set-cookie，是服务端专门用来设置cookie的。
+    每个字段对应一个cookie（注意不能将多个cookie放在一个set-cookie字段中），
+    set-cookie字段的值就是普通的字符串，每个cookie还设置了相关属性选项。
+- 一个set-Cookie字段只能设置一个cookie，当你要想设置多个 cookie，需要添加同样多的set-Cookie字段。
+- 服务端可以设置cookie 的所有选项：expires、domain、path、secure、HttpOnly
+    
+2.客户端设置
+在客户端中我们通过js代码来设置cookie。
+
+    e.g:document.cookie="age=12; expires=Thu, 26 Feb 2116 11:50:25 GMT; domain=tozlam.cn; path=/";
+    查看浏览器cookie 面板，如下图所示，新的cookie设置成功了，而且属性选项 domain、path、expires都变成了设定的值。
+- 客户端可以设置cookie 的下列选项：expires、domain、path、secure（有条件：只有在https协议的网页中，客户端设置secure类型的 cookie 才能成功），
+但无法设置HttpOnly选项。
+
+##### 用js设置多个cookie
+    document.cookie="name=john; age=12;"
+  上面的写法无法成功的设置多个cookie，只设置了"name=john",而后面所以的cookie都没有添加。
+   
+   想要正确添加多个cookie应该采用下面的写法：
+      
+      document.cookie="name=john;"
+      document.cookie="age=12;"
+      
+- 所以最简单的设置多个cookie的方法就在重复执行document.cookie = "key=name" 
