@@ -40,7 +40,7 @@
     
   所以domain和path两个选项共同决定了cookie何时被浏览器自动添加到请求头部中发送出去。 如果没有设置这两个选项，则会使用默认值。`domain的默认值为设置该cookie的网页所在的域名，path默认值为设置该cookie的网页所在的目录。`
   
-  #### secure 
+#### secure 
 - `secure用来设置cookie只在确保安全的请求中才会发送`
   
 - 当请求是https或其他安全协议时，包含secure选项的cookie才能被发送到服务器。
@@ -49,3 +49,20 @@
 
 - 如果想在网页中通过js去设置secure类型的cookie，必须保证网页是https协议的。
 
+#### httponly
+- `httponly用来设置cookie是否能通过js访问`
+
+- 默认情况下，cookie不会带httpOnly选项(即为空)，所以默认情况下，
+客户端是可以通过js代码去访问（包括读取、修改、删除等）这个cookie的。
+- 当cookie带httpOnly选项时，客户端则无法通过js代码去访问（包括读取、修改、删除等）这个cookie。
+
+- 在客户端是不能通过js代码去设置一个httpOnly类型的cookie的，这种类型的cookie只能通过服务端来设置
+
+##### 为什么我们要限制客户端去访问cookie？
+ `这样做是为了保障安全。`
+
+    试想：如果任何 cookie 都能被客户端通过document.cookie获取会发生什么可怕的事情。
+    当我们的网页遭受了 XSS 攻击，有一段恶意的script脚本插到了网页中。
+    这段script脚本做的事情是：通过document.cookie读取了用户身份验证相关的 cookie，
+    并将这些 cookie 发送到了攻击者的服务器。攻击者轻而易举就拿到了用户身份验证信息，
+    于是就可以摇摇大摆地冒充此用户访问你的服务器了（因为攻击者有合法的用户身份验证信息，所以会通过你服务器的验证）。
