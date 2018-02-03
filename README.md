@@ -8,12 +8,11 @@
 + DOCTYPE文档类型
 + 严格模式和混杂模式的区别
 + 浏览器的标准模式与怪异模式
-+ [Cookie](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/Cookie.md)
-+ Session
++ [Cookie与Session](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/Cookie.md)
 + GET/POST
 + [HTML5新元素](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/H5%E6%96%B0%E5%A2%9E%E5%85%83%E7%B4%A0.md)
 + HTTP状态码
-+ WebStorage
++ [WebStorage](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/webStorage.md)
 
 ## CSS
 - 4种定位方式的区别
