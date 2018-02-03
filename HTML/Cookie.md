@@ -84,6 +84,7 @@
 - 服务端可以设置cookie 的所有选项：expires、domain、path、secure、HttpOnly
     
 2.客户端设置
+
 在客户端中我们通过js代码来设置cookie。
 
     e.g:document.cookie="age=12; expires=Thu, 26 Feb 2116 11:50:25 GMT; domain=tozlam.cn; path=/";
