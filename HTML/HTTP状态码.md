@@ -7,7 +7,7 @@
 RFC2616 定义的状态码，由 3 位数字和原因短信组成。
 数字中的第一位指定了响应类别，后两位无分类。响应类别有以下 5 种：
     
-    Type	Reason-phrase	    Note
+    Type	   Reason-phrase	    Note
     1XX	    Informational	    信息性状态码，表示接受的请求正在处理
     2XX	    Success	            成功状态码，表示请求正常处理完毕
     3XX	    Redirection	        重定向状态码，表示需要客户端需要进行附加操作
