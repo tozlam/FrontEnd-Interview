@@ -30,6 +30,8 @@
 + 节点层次
 + DOM操作技术(动态脚本、动态样式)
 + 事件
++ Ajax
++ WebSocket和SSE
 
 ### ECMAScript6
 
