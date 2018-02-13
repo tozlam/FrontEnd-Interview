@@ -17,12 +17,14 @@
 
 
 ## CSS
+- link和@import
 - 4种定位方式的区别
-- 浮动
+- 浮动及清除浮动
 - 各种居中方法
 - 盒模型
+- box-sizing
 - [css预处理器](CSS/css预处理器.md)
-
+- display
 
 ## JavaScript
 + 5种基本类型(Undefined、Null、Boolean、Number、String)【ES6新增Symbol】

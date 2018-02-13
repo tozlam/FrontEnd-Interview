@@ -11,5 +11,4 @@ CSS 预处理器为 CSS 增加一些编程的特性，无需考虑浏览器的�
 可以让你的 CSS 更加简洁、适应性更强、可读性更佳，更易于代码的维护等诸多好处。
 
 css预处理语言：
-
-[sass](https://www.sass.hk/guide/)
+- [sass](https://www.sass.hk/guide/)
