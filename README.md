@@ -37,6 +37,8 @@
 + 事件
 + Ajax
 + WebSocket和SSE
++ 解析和序列化JSON
++ [Canvas](https://github.com/tozlam/Canvas)
 
 ### ECMAScript6
 
