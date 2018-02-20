@@ -7,14 +7,14 @@
 
    例如：
     
-    
-    function jsonpcallback(json) { //回调函数
-    console.log(json)
-    }
+        //原生Js
+        function jsonpcallback(json) { //回调函数
+        console.log(json)
+         }
 
-    $("#getJsonpByHand").click(function () {
-    CreateScript("http://localhost:2701/home/somejsonp?callback=jsonpcallback")//通过QueryString告知客户端回掉函数是哪个
-    })
+         $("#getJsonpByHand").click(function () {
+        CreateScript("http://localhost:2701/home/somejsonp?callback=jsonpcallback")//通过QueryString告知客户端回掉函数是哪个
+         })
     
     
   例如：
