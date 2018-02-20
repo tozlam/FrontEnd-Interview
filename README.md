@@ -27,6 +27,7 @@
 - box-sizing
 - [css预处理器](CSS/css预处理器.md)
 - display
+- 伪类和伪选择器
 
 ## JavaScript
 + 5种基本类型(Undefined、Null、Boolean、Number、String)【ES6新增Symbol】
