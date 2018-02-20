@@ -7,7 +7,7 @@
 
    例如：
     
-     //原生JS
+    
     function jsonpcallback(json) { //回调函数
     console.log(json)
     }
@@ -19,8 +19,8 @@
     
   例如：
    
-    //jQuery
-    $("#getJsonpByJquery").click(function () {
+        //jQuery
+        $("#getJsonpByJquery").click(function () {
         $.ajax({
             url: 'http://localhost:2701/home/somejsonp',
             dataType: "jsonp",
