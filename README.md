@@ -48,6 +48,7 @@
 ### ECMAScript6
 
 ### Vue.js / Webpack
+- axios.js
 - [transition动画](https://github.com/tozlam/VueDemo/tree/master/transition)
 - [router路由](https://github.com/tozlam/VueDemo/tree/master/router)
 - [loader](https://github.com/tozlam/VueDemo/tree/master/loader)
