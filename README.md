@@ -16,7 +16,7 @@
 + [HTTP状态码](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/HTTP状态码.md)
 + [WebStorage](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/webStorage.md)
 + [ViewPort](http://www.cnblogs.com/2050/p/3877280.html)
-
++ [性能优化](HTML/性能优化.md)
 
 ## CSS
 - link和@import
@@ -52,7 +52,7 @@
 - [transition动画](https://github.com/tozlam/VueDemo/tree/master/transition)
 - [router路由](https://github.com/tozlam/VueDemo/tree/master/router)
 - [loader](https://github.com/tozlam/VueDemo/tree/master/loader)
-
+- vuex
 
 
 ## [设计模式](https://github.com/tozlam/DesignPattern)
