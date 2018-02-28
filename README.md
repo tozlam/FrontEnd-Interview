@@ -52,6 +52,7 @@
 + [JSONP](Js/JSONP.md)
 
 ### ECMAScript6
+- 箭头函数
 
 ### Vue.js / Webpack
 - axios.js
