@@ -47,6 +47,7 @@
 + [DOM操作](Js/Dom操作.md)
 + 客户端检测
 + 事件
++ [RegExp]()
 + Ajax
 + WebSocket和SSE
 + 解析和序列化JSON
@@ -54,9 +55,21 @@
 + [JSONP](Js/JSONP.md)
 
 ### ECMAScript6
-- 箭头函数
+- let、const
+- [箭头函数](Js/ES6/箭头函数.md)
 
 ### Vue.js / Webpack
+- vue生命周期
+- v-for 列表渲染
+- v-bind 绑定
+- v-if 条件渲染
+- v-show 条件渲染
+- v-on
+- v-model
+- prop
+- 自定义组件
+- 自定义过滤器
+- vue-resource
 - axios.js
 - [transition动画](https://github.com/tozlam/VueDemo/tree/master/transition)
 - [router路由](https://github.com/tozlam/VueDemo/tree/master/router)

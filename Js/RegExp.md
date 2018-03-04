@@ -1,0 +1,39 @@
+# RegExp
+
+<table>
+<tr>
+<th></th>
+<th></th>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配一个数字</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配一个数字/字母</td>
+</tr>
+<tr>
+     <td>·</td>
+     <td>任意匹配字符</td>
+</tr>
+<tr>
+<td>*</td>
+ <td>表示0-n个字符</td>
+</tr>
+<tr>
+     <td>+</td>
+     <td>至少一个字符（1-n）</td>
+</tr>
+<tr>
+     <td>？</td>
+     <td>表示0或1个字符</td>
+</tr>
+<tr>
+     <td>{n}</td>
+     <td>表示n个字符</td>
+</tr>
+<tr>
+     <td>{n，m}</td>
+     <td>表示n-m个字符</td>
+</tr>
