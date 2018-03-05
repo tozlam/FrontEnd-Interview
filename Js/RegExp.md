@@ -86,6 +86,7 @@
      <td>[abc]</td>
      <td>a或b或c</td>
 </tr>
+</table>
 
 ## 用法
 
