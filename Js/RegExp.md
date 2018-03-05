@@ -1,5 +1,6 @@
 # RegExp
 
+## 字符
 <table>
 <tr>
 <th>字符</th>
@@ -89,7 +90,9 @@
 ## 用法
 
 - Js两种方法创建正则表达式：
+   
    1.var re1=/ABC\-001/;                    //ABC/-001
+   
    2.var re2=new RegExp("ABC\\-001");       //ABC/-001
    
 - RegExp对象的test()方法用于测试给定的字符串是否符合条件
