@@ -47,12 +47,14 @@
 + [DOM操作](Js/Dom操作.md)
 + 客户端检测
 + 事件
++ [call/apply](Js/call&apply.md)
 + [RegExp](Js/RegExp.md)
 + Ajax
 + WebSocket和SSE
 + 解析和序列化JSON
 + [Canvas](https://github.com/tozlam/Canvas)
 + [JSONP](Js/JSONP.md)
++ 模块加载器
 
 ### ECMAScript6
 - let、const
