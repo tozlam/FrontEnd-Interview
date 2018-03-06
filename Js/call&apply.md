@@ -1,5 +1,7 @@
 # call、apply
-      function cat(){}cat.prototype={     
+## 例子
+      function cat(){}
+      cat.prototype={     
         food:"fish",     
         say: function(){           
             alert("I love "+this.food);     
