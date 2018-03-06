@@ -63,13 +63,8 @@
 ### Vue.js / Webpack
 - [Vue.js](Js/Vue/Vue.md)
 - vue源码解析
-- vue生命周期
-- v-for 列表渲染
-- v-bind 绑定
-- v-if 条件渲染
-- v-show 条件渲染
-- v-on
-- v-model
+- [vue生命周期](Js/Vue/vue生命周期.md)
+- [vue基础](Js/Vue/vue基础.md)
 - prop
 - 自定义组件
 - 自定义过滤器

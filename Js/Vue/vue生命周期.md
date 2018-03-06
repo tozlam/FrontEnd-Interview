@@ -1,4 +1,5 @@
 # Vue2.+生命周期
+![vue生命周期](vue生命周期.png)
 
      beforeCreate   //组件实例刚被创建
      created        //创建完成
