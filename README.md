@@ -40,6 +40,7 @@
 + 函数表达式(递归、闭包、私有变量)
 + 作用域
 + this
++ [new](Js/new.md)
 + 创建对象：工厂模式-构造函数模式-原型模式
 + 继承：原型链-借用构造函数-组合继承
 + BOM(window对象、location对象、navigator对象、screen对象、history对象)
