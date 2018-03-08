@@ -47,7 +47,7 @@
 + 节点层次
 + [DOM操作](Js/Dom操作.md)
 + 客户端检测
-+ 事件
++ [事件](Js/事件.md)
 + [call/apply](Js/call&apply.md)
 + [RegExp](Js/RegExp.md)
 + Ajax
