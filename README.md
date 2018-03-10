@@ -48,7 +48,7 @@
 + [DOM操作](Js/Dom操作.md)
 + 客户端检测
 + [事件](Js/事件.md)
-+ [call/apply](Js/call&apply.md)
++ [call/apply/bind](Js/call&apply&bind.md)
 + [RegExp](Js/RegExp.md)
 + Ajax
 + WebSocket和SSE
