@@ -38,8 +38,8 @@
 + [JavaScript运行机制](Js/JS运行机制.md)
 + 5种基本类型(Undefined、Null、Boolean、Number、String)【ES6新增Symbol】
 + 函数表达式(递归、闭包、私有变量)
-+ 作用域
-+ this
++ [作用域](Js/作用域.md)
++ [this](http://www.cnblogs.com/pssp/p/5216085.html)
 + [new](Js/new.md)
 + 创建对象：工厂模式-构造函数模式-原型模式
 + 继承：原型链-借用构造函数-组合继承
