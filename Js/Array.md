@@ -53,7 +53,7 @@
     
 ````
 4. splice()方法
-- 可以向指定位置插入任意数量的项，只需提供3个参数：起始位置、0（要删除的项数）和要插入的项。如果要插入多个项，可以再传入第四、第五，以至任意多个项。
+- splice()方法可以向指定位置插入任意数量的项，只需提供3个参数：起始位置、0（要删除的项数）和要插入的项。如果要插入多个项，可以再传入第四、第五，以至任意多个项。
  ````
     var colors=["red","green"];
     var removed=colors.splice(1,0,"blue","orange");    //colors包含"red","blue","orange","green"
@@ -69,4 +69,57 @@
     alert(colors[2]);                   //undefined
     colors[colors.length]="black";      //向数组末尾添加新项
  ````
- 
+ 2. 栈方法
+ - pop()方法从数组末尾移除最后一项，减少数组的length值，然后返回移除的项。
+ ````
+    var colors=["red","blue"];
+    var item=colors.pop();
+    alert(item);                    //"blue"
+ ````
+ 3. 队列方法
+ - shift()方法能够移除数组中第一项并返回该项，同时数组长度减1。
+ ````
+    var colors=["red","blue"];
+    var item = colors.shift();
+    alert(item);                //"blue"
+ ````
+ 4. splice()方法
+ - splice()方法可以删除任意数量的项，只需指定两个参数：要删除的第一个项位置和要删除的项数。
+ - splice()方法始终返回一个数组，该数组中包含从原始数组中删除的项。
+ ````
+    var colors=["red","green"];
+    var removed=colors.splice(0,1);
+    alert(removed);                 //"red"
+    alert(colors);                  //"green"
+  ````
+  
+  
+  ## 排序
+  1. reverse()方法
+  - reverse()方法反转数组项的顺序
+  ````
+    var colors=["red","green","blue"];
+    colors.reverse();
+    alert(colors);                  //"blue","green","red"
+  ````
+  2. sort()方法
+  - 默认情况下，sort()方法按升序排列数组项——即最小的值位于最前面，最大的值排在最后面。
+  - 为了实现排序，sort()方法会调用每个数组项的toString()转型方法，然后比较得到的字符串，以确定如何排序。<br>
+  即使数组中的每一项都是数值，sort()方法比较的也是字符串。
+  ````
+    var values=[0,1,5,10,15];
+    values.sort();
+    alert(values);              //0,1,10,15,5    【因为比较的是字符串"10"在"5"之前】
+  ````
+  - sort()方法还可以接收一个比较函数作为参数，以便我们指定哪个值位于哪个值前面
+  ````
+    function compare(value1,value2){
+        if(value1 < value2){ return 1;}
+        else if(value1 > value2){ return -1;}
+        else{ return 0;}
+     }
+     var values=[0,1,5,10,15];
+     values.sort(compare);
+     alert(values);        //15,10,5,1,0
+  ````
+        
