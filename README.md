@@ -37,6 +37,7 @@
 ## JavaScript
 + [JavaScript运行机制](Js/JS运行机制.md)
 + 5种基本类型(Undefined、Null、Boolean、Number、String)【ES6新增Symbol】
++ [Array](Js/Array.md)
 + 函数表达式(递归、闭包、私有变量)
 + [作用域](Js/作用域.md)
 + [this](http://www.cnblogs.com/pssp/p/5216085.html)
