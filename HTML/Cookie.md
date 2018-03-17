@@ -92,6 +92,10 @@
 - 客户端可以设置cookie 的下列选项：expires、domain、path、secure（有条件：只有在https协议的网页中，客户端设置secure类型的 cookie 才能成功），
 但无法设置HttpOnly选项。
 
+由于cookie的名称和值必须是经过URL编码的，所以最好每次设置cookie都使用encodeURIComponent()
+    
+    document.cookie = encodeURIComponent("name") + "=" + encodeURIComponent("John"); 
+
 ##### 用js设置多个cookie
     document.cookie="name=john; age=12;"
   上面的写法无法成功的设置多个cookie，只设置了"name=john",而后面所以的cookie都没有添加。
@@ -102,3 +106,40 @@
       document.cookie="age=12;"
       
 - 所以最简单的设置多个cookie的方法就在重复执行document.cookie = "key=name" 
+
+## 服务端的发送与解析
+### 发送
+服务器端向客户端发送Cookie是通过HTTP响应报文实现的，在Set-Cookie中设置需要向客户端发送的cookie。<br>
+cookie格式如下：<br>
+Set-Cookie: "name=value;domain=.domain.com;path=/;expires=Sat, 11 Jun 2016 11:29:42 GMT;HttpOnly;secure"<br>
+其中name=value是必选项，其它都是可选项。
+### 解析
+cookie可以设置不同的域与路径，所以对于同一个name value，在不同域不同路径下是可以重复的，浏览器会按照与当前请求url或页面地址最佳匹配的顺序来排定先后顺序。<br>
+所以当前端传递到服务器端的cookie有多个重复name value时，我们只需要最匹配的那个，也就是第一个。<br>
+服务器端解析代码如下：
+        
+        var parse = function(cstr) {
+          if (!cstr) {
+            return null;
+          }
+           
+          var dec = decodeURIComponent;//解码
+          var cookies = {};
+          var parts = cstr.split(/\s*;\s*/g);
+          parts.forEach(function(p){
+            var pos = p.indexOf('=');
+            // name 与value存入cookie之前，必须经过编码
+            var name = pos > -1 ? dec(p.substr(0, pos)) : p;
+            var val = pos > -1 ? dec(p.substr(pos + 1)) : null;
+            //只需要拿到最匹配的那个
+            if (!cookies.hasOwnProperty(name)) {
+              cookies[name] = val;
+            }/* else if (!cookies[name] instanceof Array) {
+              cookies[name] = [cookies[name]].push(val);
+            } else {
+              cookies[name].push(val);
+            }*/
+          });
+           
+          return cookies;
+        }
