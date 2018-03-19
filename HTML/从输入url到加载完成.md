@@ -23,3 +23,21 @@ HTTP缓存有多种规则，根据是否需要重新向服务器发起请求来�
 　　cache-control中的max-age保存一个相对时间。例如Cache-Control: max-age = 484200，表示浏览器收到文件后，缓存在484200s内均有效。 如果同时存在cache-control和Expires，浏览器总是优先使用cache-control。
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
