@@ -31,7 +31,6 @@
 - [浮动及清除浮动](CSS/浮动及清除浮动.md)
 - [各种居中方法](CSS/居中.md)
 - 盒模型
-- box-sizing
 - [css预处理器](CSS/css预处理器.md)
 - display
 - 伪类和伪选择器
