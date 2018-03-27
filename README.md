@@ -6,6 +6,7 @@
 + 长/短连接
 + HTTP处理过程
 + HTTP协议
++ [HTTPS](HTML/HTTPS.md)
 + [同源策略](HTML/同源策略.md)
 + [浏览器工作原理](HTML/浏览器的工作原理.md)
 + [从输入url到加载完成](HTML/从输入url到加载完成.md)

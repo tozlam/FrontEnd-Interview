@@ -57,4 +57,9 @@ Expires = "Expires" ":" HTTP-date <br>
 例如<br>
 Expires: Thu, 01 Dec 1994 16:00:00 GMT （必须是GMT格式）
 
+## 应用
+通过HTTP的META设置expires和cache-control
 
+- < meta http-equiv = "Cache-Control" content = "max-age=7200" />
+- < meta http-equiv = "Expires" content = "Mon, 20 Jul 2009 23:00:00 GMT" />
+上述设置仅为举例，实际使用其一即可。这样写的话仅对该网页有效，对网页中的图片或其他请求无效，并不会做任何cache。
