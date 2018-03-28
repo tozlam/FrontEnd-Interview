@@ -68,6 +68,7 @@
 
 ### Vue.js / Webpack
 - [Vue.js](Js/Vue/Vue.md)
+- [webpack核心功能](Js/Vue/webpack功能.md)
 - vue源码解析
 - [vue生命周期](Js/Vue/vue生命周期.md)
 - [vue基础](Js/Vue/vue基础.md)
