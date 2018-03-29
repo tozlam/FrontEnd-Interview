@@ -61,10 +61,12 @@
 + [Canvas](https://github.com/tozlam/Canvas)
 + [JSONP](Js/JSONP.md)
 + 模块加载器
++ [垃圾回收机制及内存泄漏问题](Js/垃圾回收机制及内存泄漏问题.md)
 
 ### ECMAScript6
 - let、const
 - [箭头函数](Js/ES6/箭头函数.md)
+- [promise](Js/ES6/promise.md)
 
 ### Vue.js / Webpack
 - [Vue.js](Js/Vue/Vue.md)
