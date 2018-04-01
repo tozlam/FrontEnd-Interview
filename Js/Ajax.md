@@ -82,3 +82,4 @@ xhr.send(null);
 ````
 - 如果调用XHR对象的getResponseHeader(key)之后，就能取得对应key的响应头部信息。
 - 而getAllResponseHeaders()方法则可以取得一个包含所有头部信息的长字符串。
+
