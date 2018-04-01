@@ -5,13 +5,11 @@
 + [浏览器工作原理](HTML/浏览器的工作原理.md)
 + TCP和UDP的工作流程及特点
 + 长/短连接
-+ HTTP处理过程
 + HTTP协议
 + [HTTPS](HTML/HTTPS.md)
 + [同源策略](HTML/同源策略.md)
 + [浏览器工作原理](HTML/浏览器的工作原理.md)
 + [从输入url到加载完成](HTML/从输入url到加载完成.md)
-+ 浏览器
 + [缓存策略](http://www.imweb.io/topic/55c6f9bac222e3af6ce235b9)
 + DOCTYPE文档类型
 + 严格模式和混杂模式的区别
@@ -32,10 +30,10 @@
 - 4种定位方式的区别
 - [浮动及清除浮动](CSS/浮动及清除浮动.md)
 - [各种居中方法](CSS/居中.md)
-- 盒模型
+- 盒模型&box-sizing
 - [css预处理器](CSS/css预处理器.md)
 - display
-- [伪类和伪元素]()
+- [伪类和伪元素](CSS/伪类与伪元素.md)
 - 页面的布局方式
 
 
@@ -56,7 +54,7 @@
 + [事件](Js/事件.md)
 + [call/apply/bind](Js/call&apply&bind.md)
 + [RegExp](Js/RegExp.md)
-+ Ajax
++ [Ajax](Js/Ajax.md)
 + WebSocket和SSE
 + 解析和序列化JSON
 + [Canvas](https://github.com/tozlam/Canvas)
