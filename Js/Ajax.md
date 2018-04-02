@@ -93,4 +93,25 @@ xhr.open("get","example.json?value=1&name=2",true);
 
 ````
 ### Post请求
+- Post请求通常用于向服务器发送应该被保存的数据。
+- Post请求应该把数据作为请求的主体提交。请求的主体可以包含非常多的数据，而且格式不限。
+````
+xhr.open("post","example.json",true);
+xhr.send("{key:0,key1=1}");
+````
+
+- 两者的传递信息的方式并不相同，相比较而言，使用post方式可以不限格式的提交数据，而get受限于url的格式问题。
+- url长度理论上没有长度限制，但因为各种浏览器所支持的url长度不同，特别是老版本的ie，限制是2083字节，而post因为走的header部分，且在form时，可以与表单数据一起提交，所以数据量取决于服务器的处理能力。
+
+### FormData
+- 作为表单而言，序列化是使用很频繁的，jQuery里也有相应的函数实现（serialize()）,而如果使用FormData：
+````
+xhr.open("post","example.json",true);
+var form = document.getElementById("user-info");
+xhr.send(new FormData(form));
+````
+- 就可以不必明确的在XHR对象上设置请求头部。
+
+### 超时设定
+- timeout表示请求在等待响应多少毫秒之后就会终止。在给timeout设置一个数值后，如果在规定的时间内浏览器还没有收到响应，那么就会触发timeout事件，进而会调用ontimeout()回调。
 
