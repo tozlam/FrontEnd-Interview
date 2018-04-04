@@ -66,6 +66,7 @@
 - let、const
 - [箭头函数](Js/ES6/箭头函数.md)
 - [promise](Js/ES6/promise.md)
+- [export/import]
 
 ### Vue.js / Webpack
 - [Vue.js](Js/Vue/Vue.md)
