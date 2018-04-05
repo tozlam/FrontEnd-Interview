@@ -66,7 +66,7 @@
 - let、const
 - [箭头函数](Js/ES6/箭头函数.md)
 - [promise](Js/ES6/promise.md)
-- [export/import]
+- [export/import](Js/ES6/export&import.md)
 
 ### Vue.js / Webpack
 - [Vue.js](Js/Vue/Vue.md)
@@ -82,7 +82,7 @@
 - [transition动画](https://github.com/tozlam/VueDemo/tree/master/transition)
 - [router路由](https://github.com/tozlam/VueDemo/tree/master/router)
 - [loader](https://github.com/tozlam/VueDemo/tree/master/loader)
-- vuex
+- [vuex](https://github.com/tozlam/VueDemo/tree/master/vuex/vuex-demo)
 
 
 ## [设计模式](https://github.com/tozlam/DesignPattern)
