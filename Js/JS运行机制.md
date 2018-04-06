@@ -5,8 +5,8 @@
 
 1. JS为什么是单线程的?
 ````
-JS最初被设计用在浏览器中,那么想象一下：<br>
-如果浏览器中的JS是多线程的,那么现在有2个进程,process1 process2,<br>
+JS最初被设计用在浏览器中,那么想象一下：
+如果浏览器中的JS是多线程的,那么现在有2个进程,process1 process2,
 由于是多进程的JS,所以他们对同一个dom,同时进行操作
 process1 删除了该dom,而process2 编辑了该dom,同时下达2个矛盾的命令,浏览器究竟该如何执行呢?
 ````
@@ -91,7 +91,7 @@ console.log('代码执行结束');
 `
 - console.log(1) 是同步任务,放入主线程里
 - setTimeout() 是异步任务,被放入event table, 0秒之后被推入event queue里
-- console.log(3 是同步任务,放到主线程里
+- console.log(3) 是同步任务,放到主线程里
 
 当 1、 3在控制条被打印后,主线程去event queue(事件队列)里查看是否有可执行的函数,执行setTimeout里的函数
 
@@ -129,7 +129,7 @@ console.log('代码执行结束');
  
  遇到 new Promise直接执行,打印"马上执行for循环啦"
  
- 遇到then方法,是微任务,将其放到微任务的【队列里】
+ 遇到then方法,是微任务,将其放到微任务的【队列】里
  
  打印 "代码执行结束"
  
