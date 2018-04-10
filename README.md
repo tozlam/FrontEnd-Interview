@@ -62,6 +62,7 @@
 + [JSONP](Js/JSONP.md)
 + 模块加载器
 + [垃圾回收机制及内存泄漏问题](Js/垃圾回收机制及内存泄漏问题.md)
++ [XSS和CSRF攻击及防范](Js/XSS和CSRF攻击及防范.md)
 
 ### ECMAScript6
 - let、const
