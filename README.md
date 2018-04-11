@@ -35,7 +35,7 @@
 - display
 - [伪类和伪元素](CSS/伪类与伪元素.md)
 - 页面的布局方式
-
+- [flex布局](CSS/flex.md)
 
 ## JavaScript
 + [JavaScript运行机制](Js/JS运行机制.md)
