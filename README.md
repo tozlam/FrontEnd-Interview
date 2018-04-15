@@ -66,6 +66,7 @@
 
 ### ECMAScript6
 - let、const
+- [class、extends、super](Js/ES6/class.md)
 - [箭头函数](Js/ES6/箭头函数.md)
 - [promise](Js/ES6/promise.md)
 - [export/import](Js/ES6/export&import.md)
