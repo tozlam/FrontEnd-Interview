@@ -31,11 +31,13 @@
 - [浮动及清除浮动](CSS/浮动及清除浮动.md)
 - [各种居中方法](CSS/居中.md)
 - 盒模型&box-sizing
+- [置换元素](CSS/置换元素.md)
 - [css预处理器](CSS/css预处理器.md)
 - display
 - [伪类和伪元素](CSS/伪类与伪元素.md)
 - 页面的布局方式
 - [flex布局](CSS/flex.md)
+- [px、em、rem](CSS/px&em&rem.md)
 
 ## JavaScript
 + [JavaScript运行机制](Js/JS运行机制.md)
@@ -65,8 +67,10 @@
 + [XSS和CSRF攻击及防范](Js/XSS和CSRF攻击及防范.md)
 
 ### ECMAScript6
-- let、const
+- ES6六种声明变量的方法：var function let const import class
+- [let、const](Js/ES6/let&const.md)
 - [class、extends、super](Js/ES6/class.md)
+- [解构](Js/ES6/解构.md)
 - [箭头函数](Js/ES6/箭头函数.md)
 - [promise](Js/ES6/promise.md)
 - [export/import](Js/ES6/export&import.md)
