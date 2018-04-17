@@ -32,13 +32,14 @@
 - [各种居中方法](CSS/居中.md)
 - 盒模型&box-sizing
 - [置换元素](CSS/置换元素.md)
-- [line-height]
+- [line-height](CSS/line-height.md)
 - [css预处理器](CSS/css预处理器.md)
 - display
 - [伪类和伪元素](CSS/伪类与伪元素.md)
 - 页面的布局方式
 - [flex布局](CSS/flex.md)
 - [px、em、rem](CSS/px&em&rem.md)
+- [rgba/opacity/transparent](CSS/rgba-opacity-transparent.md)
 
 ## JavaScript
 + [JavaScript运行机制](Js/JS运行机制.md)
