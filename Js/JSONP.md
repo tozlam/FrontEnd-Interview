@@ -1,6 +1,6 @@
 # JSONP
 
-- JSONP是json的一种“使用模式”，用于解决主流浏览器的跨域数据访问问题（规避[同源策略](../HTML/同源策略.md)）
+- JSONP是json的一种“使用模式”，用于解决主流浏览器的跨域数据访问问题（规避[同源策略](../HTML及计算机网络/同源策略.md)）
 - 用JSONP抓取到的资料不是json，而是任意Javascript
 - 用Javascript直译器执行而不是用json解析器解析
 

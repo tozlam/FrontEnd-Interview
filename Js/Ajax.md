@@ -28,7 +28,7 @@ xhr.send(null);
 - 在收到响应后，响应的数据会自动填充XHR对象的属性，相关的属性如下：
   - responseText:作为响应主体被返回的文本
   - responseXML:如果响应的内容类型是"text/xml"或"application/xml",这个属性将保存包含响应数据的XML DOM文档
-  - [status:响应的HTTP状态](../HTML/HTTP状态码.md)
+  - [status:响应的HTTP状态](../HTML及计算机网络/HTTP状态码.md)
   - statusText:HTTP状态的说明
 - 在接收到响应后第一步是检查status属性，以确定响应是否已经成功返回。
 #### readyState属性

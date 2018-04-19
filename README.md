@@ -2,28 +2,28 @@
 前端知识体系总结及部分重点笔记
 
 ## HTML / 计算机网络
-+ [浏览器工作原理](HTML/浏览器的工作原理.md)
-+ TCP和UDP的工作流程及特点
++ [浏览器工作原理](HTML及计算机网络/浏览器的工作原理.md)
++ TCP和UDP
 + 长/短连接
 + HTTP协议
-+ [HTTPS](HTML/HTTPS.md)
-+ [同源策略](HTML/同源策略.md)
-+ [浏览器工作原理](HTML/浏览器的工作原理.md)
-+ [从输入url到加载完成](HTML/从输入url到加载完成.md)
++ [HTTPS](HTML及计算机网络/HTTPS.md)
++ [同源策略](HTML及计算机网络/同源策略.md)
++ [浏览器工作原理](HTML及计算机网络/浏览器的工作原理.md)
++ [从输入url到加载完成](HTML及计算机网络/从输入url到加载完成.md)
 + [缓存策略](http://www.imweb.io/topic/55c6f9bac222e3af6ce235b9)
 + DOCTYPE文档类型
 + 严格模式和混杂模式的区别
 + 浏览器的标准模式与怪异模式
-+ [web语义化](HTML/web语义化.md)
-+ [W3C标准](HTML/W3C标准.md)
-+ [Cookie与Session](HTML/Cookie.md)
++ [web语义化](HTML及计算机网络/web语义化.md)
++ [W3C标准](HTML及计算机网络/W3C标准.md)
++ [Cookie与Session](HTML及计算机网络/Cookie.md)
 + GET/POST
 + [HTML5新元素](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/H5%E6%96%B0%E5%A2%9E%E5%85%83%E7%B4%A0.md)
 + [HTTP状态码](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/HTTP状态码.md)
 + [WebStorage](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/webStorage.md)
 + [ViewPort](http://www.cnblogs.com/2050/p/3877280.html)
-+ [性能优化](HTML/性能优化.md)
-+ [BFC与IFC](HTML/BFC与IFC.md)
++ [性能优化](HTML及计算机网络/性能优化.md)
++ [BFC与IFC](HTML及计算机网络/BFC与IFC.md)
 
 ## CSS
 - [link和@import](CSS/link和@import.md)
