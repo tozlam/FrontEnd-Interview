@@ -105,3 +105,53 @@ console.log(b instanceof CalculatorMixin)//true
 console.log(b instanceof RandomizerMixin)//true
 console.log(b instanceof Object)//true
 ````
+
+### apply/call
+````
+function Coord(x){
+    this.x = x;
+}
+Coord.prototype.outputCoord = function(){
+    console.log(this.x,this.y,this.z)
+}
+
+function Other(y){
+    this.y=y;
+}
+Other.prototype.outputOther = function(){
+    console.log(this.x,this.y,this.z)
+}
+
+function SpaceObject(x,y,z) {
+    Coord.call(this, x); 
+    Other.call(this, y); 
+                                  
+    this.z=z;
+}
+SpaceObject.prototype.outputSpace = function(){
+    console.log(this.x,this.y,this.z)
+}
+
+SpaceObject.prototype = Object.create(Coord.prototype);
+SpaceObject.prototype.constructor = SpaceObject;
+
+
+!function mixinOther() {
+    var keys = Object.keys(Other.prototype);
+    var i, len;
+    for(var i = 0, len = keys.length; i < len; i++) {
+        SpaceObject.prototype[keys[i]] = Other.prototype[keys[i]];
+    }
+}()
+
+var space = new SpaceObject(1,2,3);
+space.outputCoord()//1 2 3
+space.outputOther()//1 2 3
+space.outputSpace()//1 2 3
+console.log(space instanceof SpaceObject);//true
+console.log(space instanceof Coord);//true
+console.log(space instanceof Other);//false
+````
+这种方法应该是最常见的一种方式，缺点就是无法用instanceof操作符检测更深层次的父子关系以及无法使用super进行操作，其他方面还好。
+
+
