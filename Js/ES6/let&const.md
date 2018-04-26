@@ -18,7 +18,7 @@ b       //1
 - for循环的计数器就适合使用let命令
 ````
 for(let i=0;i<10;i++){}
-console.log(i_;             //Error
+console.log(i);             //Error
 ````
 for循环的特别之处就是循环语句部分是一个父作用域，而循环体内部是一个单独的子作用域。
 ````
@@ -27,6 +27,14 @@ for（let i=0;i<3){
     console.log(i); //abc abc abc 
     }
 //内部、外部i分离
+````
+for循环头部的let声明还有一个特殊的行为。这个行为指出变量在循环过程中不止被声明一次，每次迭代都会被声明。随后的每个迭代都会使用上一个迭代结束时的值来初始化这个变量。
+```
+for(let i=1;i<=5;i++){
+    setTimerout(function timer(){
+        console.log(i);
+        },i*1000);
+    }
 ````
 ### const
 - const声明的是常量，一旦声明常量的值就不能改变
