@@ -15,14 +15,14 @@
 所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。
 
 ## 概念
-call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了动态改变函数体内部 this 的指向。<br>
+call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了动态改变函数体内部 [this](this.md) 的指向。<br>
 因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。<br>
 二者的作用完全一样，只是接受参数的方式不太一样。唯一区别是apply接受的是数组参数，call接受的是连续参数。
 
 #### 函数调用的三种方式:
-- 1 obj.myFunc();
-- 2 myFunc.call(obj,arg1,arg2);
-- 3 myFunc.apply(obj,[arg1,arg2]);
+- 1 obj.myFunc();//隐式调用
+- 2 myFunc.call(obj,arg1,arg2);//显式调用
+- 3 myFunc.apply(obj,[arg1,arg2]);//显式调用
 
 其中 obj(即this) 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)。如果写的是null，那么this指向的是window对象<br>
 call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。
