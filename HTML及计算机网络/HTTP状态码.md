@@ -13,13 +13,11 @@ RFC2616 定义的状态码，由 3 位数字和原因短信组成。
     3XX	    Redirection	           重定向状态码，表示需要客户端需要进行附加操作
     4XX	    Client Error	    客户端错误状态码，表示服务器无法处理请求
     5XX	    Server Error	    服务器错误状态码，表示服务器处理请求出错
-    
-RFC2616 记录的 HTTP 状态码有 37 种，再加上「WebDAV」(RFC4918、5842)和
-「Additional HTTP Status Codes」(RFC6585)，数量就达到 60 多种。
+
 
 ## 常用的状态码
 
-##2XX Success
+## 2XX Success
 
     This class of status code indicates that the client’s request was successfully received, 
     understood, and accepted.
@@ -68,8 +66,7 @@ RFC2616 记录的 HTTP 状态码有 37 种，再加上「WebDAV」(RFC4918、584
     当访问这个书签的时候，请求会被重定向到
     http://wan.meizu.com
     并且对应的书签会被改变，指向http://wan.meizu.com
-    
-    不信？Try yourself.
+
 
 #### 302 Found
 
