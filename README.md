@@ -18,9 +18,9 @@
 + [W3C标准](HTML及计算机网络/W3C标准.md)
 + [Cookie与Session](HTML及计算机网络/Cookie.md)
 + GET/POST
-+ [HTML5新元素](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/H5%E6%96%B0%E5%A2%9E%E5%85%83%E7%B4%A0.md)
-+ [HTTP状态码](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/HTTP状态码.md)
-+ [WebStorage](https://github.com/tozlam/FrontEnd-Interview/blob/master/HTML/webStorage.md)
++ [HTML5新元素](HTML及计算机网络/H5新增元素.md)
++ [HTTP状态码](HTML及计算机网络/HTTP状态码.md)
++ [WebStorage](HTML及计算机网络/webStorage.md)
 + [ViewPort](http://www.cnblogs.com/2050/p/3877280.html)
 + [性能优化](HTML及计算机网络/性能优化.md)
 + [BFC与IFC](HTML及计算机网络/BFC与IFC.md)
