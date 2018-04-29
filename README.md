@@ -48,7 +48,7 @@
 + [Array](Js/Array.md)
 + 函数表达式(递归、闭包、私有变量)
 + [作用域](Js/作用域.md)
-+ [this](http://www.cnblogs.com/pssp/p/5216085.html)
++ [this](Js/this.md)
 + [new](Js/new.md)
 + 创建对象：工厂模式-构造函数模式-原型模式
 + 继承：原型链-借用构造函数-组合继承
