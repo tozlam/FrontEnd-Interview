@@ -7,7 +7,7 @@
 + 长/短连接
 + HTTP协议
 + [HTTPS](HTML及计算机网络/HTTPS.md)
-+ [同源策略](HTML及计算机网络/同源策略.md)
++ [同源策略及跨域问题](HTML及计算机网络/同源策略.md)
 + [浏览器工作原理](HTML及计算机网络/浏览器的工作原理.md)
 + [从输入url到加载完成](HTML及计算机网络/从输入url到加载完成.md)
 + [缓存策略](http://www.imweb.io/topic/55c6f9bac222e3af6ce235b9)
