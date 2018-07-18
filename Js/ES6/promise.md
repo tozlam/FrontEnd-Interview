@@ -1,5 +1,19 @@
 # Promise
 ###### 整理自：https://segmentfault.com/a/1190000011652907
+## 用途
+解决回调函数的嵌套，也就是所谓的回调地狱
+````
+//回调地狱（多层嵌套）
+doSomethingA((res) =>{if (res.data) {
+    doSomethingB(res.data, (resB) => {
+      if (resB.data) {
+        doSomethingC(resB.data)
+      }
+    })
+  }})
+
+````
+
 ## 含义
 Promise 对象用于一个异步操作的最终完成（或失败）及其结果值的表示。<br>
 简单点说，它就是用于处理异步操作的，异步处理成功了就执行成功的操作，异步处理失败了就捕获错误或者停止后续操作。
@@ -48,7 +62,7 @@ pending -> rejected
 
 ## 方法
 ### Promise.prototype.then()
-Promise对象含有then方法，then()调用后返回一个Promise对象，意味着实例化后的Promise对象可以进行链式调用，而且这个then()方法可以接收两个函数，一个是处理成功后的函数，一个是处理错误结果的函数。
+Promise对象含有then方法，then()调用后返回一个`新的`Promise实例，意味着实例化后的Promise对象可以进行链式调用，而且这个then()方法可以接收两个函数，一个是处理成功后的函数，一个是处理错误结果的函数。
 
 如下：
 ````
@@ -124,7 +138,8 @@ promise2
 });
 ````
 ### Promise.prototype.catch()
-catch()方法和then()方法一样，都会返回一个新的Promise对象，它主要用于捕获异步操作时出现的异常。因此，我们通常省略then()方法的第二个参数，把错误处理控制权转交给其后面的catch()函数，如下：
+catch()方法和then()方法一样，都会返回一个新的Promise对象。
+它是.then(null,rejection)的别名，它主要用于捕获异步操作时出现的异常。因此，我们通常省略then()方法的第二个参数，把错误处理控制权转交给其后面的catch()函数，如下：
 ````
 var promise3 = new Promise(function(resolve, reject) {
   setTimeout(function() {
@@ -140,6 +155,9 @@ promise3.then(function(data) {
   console.log('出错：' + err); // 出错：reject
 });
 ````
+· 如果Promise状态已经变成Resolved，再抛出的错误是无效的，并不会捕获。
+
+· Promise对象的错误具有“冒泡”的性质，会一直向后传递，直到被捕获为止。
 
 ### Promise.all()
 Promise.all()接收一个参数，它`必须是可以迭代的`，比如数组。
