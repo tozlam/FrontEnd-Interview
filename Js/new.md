@@ -1,47 +1,27 @@
 # new流程
 
-##  __ proto__
-- proto就是javascript中所谓的原型
 
-举个例子：
-
-   ```` 
-   function A (name) {         // 这里是一个构造函数
-        thia.name = name
+````
+手撕NEW的源码(NEW执行的原理) Ctor->constructor
+    创建当前类的一个空实例对象
+     + 空对象
+     + 实例对象.__proto__===Ctor.prototype
+    把构造函数当做普通函数一样执行
+    让方法执行的时候，方法中的this指向这个实例对象「this.xxx=xxx就是在给实例对象设置私有的属性和方法」
+    看方法的返回结果 如果没有返回值/或者返回的是原始值，我们默认都返回实例对象；返回的如果是对象类型，则以用户自己手动返回的为主；
+ 
+function myNew(Ctor, ...params) {
+    let obj = Object.create(Ctor.prototype); 
+    // Object.create(A)：创建一个空的对象并把A作为新对象的原型（新对象.__proto__ === A）; A只能是null或者是对类型
+    let result = Ctor.call(obj, ...params);
+    if (result && (typeof result === "object" || typeof result === "function")) {
+        return result
     }
-    
-    var Aobj = {                // 这里是一个 对对象字面量
-        name: ''
-    }
-    
-    // 我们分别打印出来这二个对象看看
-    console.dir(A)
-    
-    console.dir(Aobj)
-````
-结果如下：
-![new_01](../img/js_new_01.png)
-````
-这里我们可以很明显的看到 
-构造函数的  __proto__ 属性 指向了 function()
-
-对象字面量的  __proto__ 属性 指向了 Object
-
-为什么 指向的 是不一样的呢？
-
-思考下:
-
-确实是 不一样的， 因为 构造函数本身也是一个 函数， 所以它 的原型 指向  function() 
-
-而对象字面量 是一个 对象， 那么他的 原型肯定是指向  Object
-````
-````
-var fn = function(a){
-    this.a = a;
+    return obj;
 }
-var obj = {};
-//继承
-obj.__proto__ = fn.prototype;
-//改变this指向
-fn.call(obj);
+
+创建新对象并设置原型
+绑定this并执行
+根据结果返回result或者新对象
+
 ````

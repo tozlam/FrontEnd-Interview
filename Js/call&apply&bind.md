@@ -63,6 +63,35 @@ var b = a.fn;
 b.apply(a,[1,2]);
 ````
 
+## 手写
+- call
+````
+    Function.prototype.mycall = function (context, ...args) {
+        if (typeof this !== 'function') {
+             throw new TypeError('error');
+        }
+        
+        const fn = symbol(fn);
+        context = context || window;
+        context[fn] = this;
+        let result = context[fn](...args);
+        delete context[fn];
+        return result;
+    
+    }
+````
+- bind
+````
+Function.prototype.bind = function (context, ...params) {
+    let _this = this;
+    return functuon (...args) {
+        params = params.concat(args);
+        return this.call(context, ...params);
+    }
+}
+
+````
+
 # bind
 bind()和call与apply不同。bind是新创建一个函数，然后把它的上下文绑定到bind()括号中的参数上，然后将它返回。
 

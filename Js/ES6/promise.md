@@ -282,3 +282,374 @@ p10.then(function(data) {
 });
 ````
 总之，除非Promise.then()方法内部抛出异常或者是明确置为rejected态，否则它返回的Promise的状态都是fulfilled态，即完成态，并且它的状态不受它的上一级的状态的影响。
+
+https://promisesaplus.com/
+````
+简单版promise实现：
+
+(function Promise(execute) {
+    var self = this, timer = null;
+    
+    if (typeof execute !== 'function') throw new TypeError();
+    if (!(self instanceof Promise)) throw new TypeError();
+    
+    self.state = 'pending';
+    self.value = undefined;
+    self.onreslovedCallback = [];
+    self.onrejectedCallback = [];
+    
+    // 状态改变的事件
+    var change = function change (state, value) {
+        if (self.state !== 'pending') return
+        self.state = state;
+        self.value = value;
+        
+        timer = setTimeout(() => {
+            clearTimeout(timer);
+            timer = null;
+            
+            var callbacks = state === 'fulfilled' ? self.onreslovedCallback : self.onrejectedCallback;
+            for (let i = 0; i < callbacks.length; i++) {
+                callbacks[i](value);
+            }
+        })
+        
+    }
+    
+    var resloved = function resloved(result) {
+        change('fulfilled', result);
+    }
+    var rejected = function resloved(reason) {
+        change('rejected', reason);
+    }
+    
+    try {
+        execute(resloved, rejected)
+    } catch (reason) {
+        change('rejected', reason);
+ }
+ 
+ Promise.prototype = {
+    constructor: Promise,
+    // 执行THEN的时候，如果知道了实例状态，直接执行「不是立即的，也是一个异步微任务」对应的方法
+    // 此时还不知道实例的状态，则先把方法存储取来，等到后期知道状态的时候「resolve/reject执行」，再通知之前存储的方法执行即可「异步微任务」
+    then: function then(onresolved, onrejected) {
+        var self = this, timer = null;
+        switch(self.state) {
+            // 已明确状态是fulfilled的情况下
+            case 'fulfilled':
+                timer = setTimeout(() => { // 做异步处理
+                    clearTimeout(timer);
+                    timer = null;
+                    onresolved(self.value);
+                })
+                break;
+            case 'rejected':
+                timer = setTimeout(() => {
+                    clearTimeout(timer);
+                    timer = null;
+                    onrejected(self.value);
+                })
+                break;
+            default: // 不确定状态的时候先将onresolved和onrejected存储起来 供以后更新状态时使用
+                self.onresolvedCallback.push(onresolved);
+                self.onrejectedCallback.push(onrejected);
+                break;
+        }
+    },
+    catch: () => {},
+ }
+ if (typeof Symbol !== 'undefined') {
+    Promise.prototype[Symbol.toStringTag] = 'Promise';// 为Object.toString.call检测类型提供结果
+ }
+
+ // 暴露API
+ if (typeof window !== "undefined") window.Promise = Promise;
+ if (typeof module === "object" && typeof module.exports === "object") module.exports = Promise;
+})();
+
+
+promise+then链的实现：
+(function Promise(execute) {
+    var self = this, timer = null;
+    
+    if (typeof execute !== 'function') throw new TypeError();
+    if (!(self instanceof Promise)) throw new TypeError();
+    
+    self.state = 'pending';
+    self.value = undefined;
+    self.onresolvedCallback = [];
+    self.onrejectedCallback = [];
+    
+    // 状态改变的事件
+    var change = function change (state, value) {
+        if (self.state !== 'pending') return
+        self.state = state;
+        self.value = value;
+        
+        timer = setTimeout(() => {
+            clearTimeout(timer);
+            timer = null;
+            
+            var callbacks = state === 'fulfilled' ? self.onresolvedCallback : self.onrejectedCallback;
+            for (let i = 0; i < callbacks.length; i++) {
+                callbacks[i](value);
+            }
+        })
+       
+    }
+    
+    var resolved = function resolved(result) {
+        change('fulfilled', result);
+    }
+    var rejected = function resolved(reason) {
+        change('rejected', reason);
+    }
+    
+    try {
+        execute(resolved, rejected)
+    } catch (reason) {
+        change('rejected', reason);
+ }
+ 
+ function resolvePromise(promise, x, resolve, reject) {
+    // promise: 每一次then要返回的实例
+    // x: onfulfilled/onrejected返回的结果
+    // resolve/reject: 这两个执行可以决定promise是成功或者失败
+    
+     // x不能跟promise是同一个
+     if (x === promise) throw new TypeError('Chaining cycle detected for promise #<Promise>');
+     
+     // 如果x是object或者function
+     if (/^(object|function)$/i.test(typeof x)) {
+        var then;
+        try {
+            then = x.then
+        }catch(err) {
+            reject(err);
+        }
+        
+        // 如果x.then是个函数(代表x.then是个promise类型的)
+        if (typeof then === 'function') {
+            var called = false; // 防抖
+            try {
+                // x.then()
+                then.call(x, function onfulfilled(y) {
+                    if (called) return
+                    called = true;
+                    // 递归 （因为x.then是个promise，所以要等他执行完返回状态后才能返回成功或失败）
+                    resolvePromise(promise, y, resolve, reject);
+                }, function onrejected(r) {
+                    if (called) return
+                    called = true;
+                    reject(r);
+                })
+            }catch(err) {
+                if (called) return
+                reject(err);
+            }
+        }
+     }
+     resolve(x);
+ }
+ 
+ 
+ Promise.prototype = {
+    constructor: Promise,
+    // 执行THEN的时候，如果知道了实例状态，直接执行「不是立即的，也是一个异步微任务」对应的方法
+    // 此时还不知道实例的状态，则先把方法存储取来，等到后期知道状态的时候「resolve/reject执行」，再通知之前存储的方法执行即可「异步微任务」
+    then: function then(onfulfilled, onrejected) {
+        var self = this, timer = null, promise;
+        
+        // 如果不是传的函数则变成函数，顺延操作
+        if (typeof onfulfilled !== 'function') {
+            onfulfilled = function onfulfilled (result) {
+                return result;
+            }
+        }
+        if (typeof onrejected !== 'function') {
+            onrejected = function onfulfilled (reason) {
+                throw reason;
+            }
+        }
+        
+        // promise是返回的新实例，执行reslove/reject控制他的状态和结果；但是具体执行哪个方法由onfulfilled/onrejected执行决定(是否报错、是否返回新的promise实例)
+        promise = new Promise(function(resolve,reject) {
+             switch(self.state) {
+                // 已明确状态是fulfilled的情况下
+                case 'fulfilled':
+                    timer = setTimeout(() => { // 做异步处理
+                        clearTimeout(timer);
+                        timer = null;
+                        try {
+                            var x = onfulfilled(self.value);
+                            resolvePromise(promise, x, resolve, reject);
+                        } catch(err) {
+                            reject(err)
+                        }
+                    })
+                    break;
+                case 'rejected':
+                    timer = setTimeout(() => {
+                        clearTimeout(timer);
+                        timer = null;
+                        try {
+                            var x =  onrejected(self.value);
+                            resolvePromise(promise, x, resolve, reject);
+                        } catch(err) {
+                            reject(err)
+                        }
+                      
+                    })
+                    break;
+                default: 
+                // 向集合中存储的是一个匿名函数，后期change方法执行时先把匿名函数执行，再执行onfulfilled（监听是否报错及返回值）
+                    self.onresolvedCallback.push(function(result) {
+                       try {
+                            var x = onfulfilled(result);
+                            resolvePromise(promise, x, resolve, reject);
+                        } catch(reason) {
+                            reject(reason)
+                        }
+                    });
+                    self.onrejectedCallback.push(function(reason) {
+                       try {
+                            var x = onrejected(reason);
+                            resolvePromise(promise, x, resolve, reject);
+                        } catch(err) {
+                            reject(err)
+                        }
+                    });
+                    break;
+            }
+        });
+        return promise;
+    },
+    catch: function myCatch(onrejected) {
+        return this.then(null, onrejected)
+    },
+ }
+ if (typeof Symbol !== 'undefined') {
+    Promise.prototype[Symbol.toStringTag] = 'Promise';// 为Object.toString.call检测类型提供结果
+ }
+ 
+ // 判断是否是promise类型的
+ function isPromise(x) {
+    if (x !== null && /^(object|function)$/i.test(typeof x)) {
+        if(typeof x.then === 'function') {
+            return true;
+        }
+    }
+    return false;
+ }
+ 
+ Promise.resolve = function resolve(result) {
+    return new Promise(function (result) {
+        resolve(result);
+    })
+ };
+ Promise.reject = function reject(reason) {
+    return new Promise(function (reason) {
+        reject(reason);
+    })
+ };
+ Promise.all = function all(promises) {
+    var n = 0, results = [];
+    if (!Array.isArray(promises)) throw new TypeError();
+    
+    return new Promise(function (resolve, reject) {
+        for (var i = 0; i < promises.length; i++){
+            (function(i) {
+                var promise = promises[i];
+                
+                // 如果这一项不是promise类型的时候就把他变成promise类型的
+                if (!isPromise(promise)) {
+                    promise = Promise.resolve(promise);
+                }
+                
+                promise.then(function(result) {
+                    n++;
+                    results[i] = result;
+                    if (n >= promises.length) resolve(results);
+                }).catch(reason) {
+                    reject(reason);
+                }
+            })(i);
+        }  
+    })
+    
+ }
+
+ // 暴露API
+ if (typeof window !== "undefined") window.Promise = Promise;
+ if (typeof module === "object" && typeof module.exports === "object") module.exports = Promise;
+})();
+````
+
+````
+Promise A+ 测试
+
+安装promises-aplus-tests
+
+npm install promises-aplus-tests --save-dev
+手写代码中加入 deferred
+
+Promise.deferred = function () {
+var result = {};
+result.promise = new Promise(function (resolve, reject) {
+result.resolve = resolve;
+result.reject = reject;
+});
+return result;
+}
+配置启动命令
+
+{
+"scripts": {
+"test": "promises-aplus-tests MyPromise.js"
+},
+......
+}
+开启测试
+
+npm run test
+````
+
+````
+题目. 设计一个简单的任务队列，要求分别在1,3,4秒后打印出”1“，”2“，”3“
+  new Quene()
+  .task(1000, () => {
+  console.log(1)
+  })
+  .task(2000, () => {
+  console.log(2)
+  })
+  .task(1000, () => {
+  console.log(3)
+  })
+  .start()
+
+  function Quene() { ... }
+  
+  
+解： 
+  function Quene() {
+    this.queneList = [];
+  }
+  Quene.prototype.task = function (time, callback) {
+    this.queneList.push({time, callback});
+  }
+  Quene.prototype.start = function () {
+    let result = Promise.resolve();
+    this.queneList.forEach(item => {
+        result = result.then(() => {
+            return new Promise((resolve, reject) => {
+                 setTimeout(() => {
+                    resolve(item.callback());
+                }, item.time)
+            })
+        })
+    })
+  }
+
+````
