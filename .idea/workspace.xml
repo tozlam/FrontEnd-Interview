@@ -1,57 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="24195e3a-47e1-4bb4-bc10-65428946520f" name="Default" comment="commit">
-      <change afterPath="$PROJECT_DIR$/CSS/专题.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/Node/eventLoop.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/Vue/sap.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/Vue/v-router.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/Vue/vue原理.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/genernator&amp;iterator&amp;await.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/专题.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/块级上下文.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js/浏览器底层渲染机制.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QnA/面经.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/HRM.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/eventLoop1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/eventLoop2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/eventLoop3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/eventLoop4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/eventLoop5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/eventLoop6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/nodeEventLoop.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/prototype1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/vue-diff.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/vue异步渲染.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/函数执行机制例题2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/块级上下文1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/块级上下文2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/防抖和节流.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/面向对象3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/面向对象4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ts/专题.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack/webpack功能.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack/专题.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js/Vue/vue3.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/BFC与IFC.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS/BFC与IFC.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/HTTPS.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/HTTPS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/HTTP协议.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/HTTP协议.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/webStorage.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/webStorage.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/从输入url到加载完成.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/从输入url到加载完成.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/ES6/promise.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/ES6/promise.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/ES6/箭头函数.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/ES6/箭头函数.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Vue/Virtual DOM.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/Virtual DOM.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/Vue/vue原理.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue原理.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Js/Vue/vue基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue基础.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Vue/vue数据双向绑定.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Js/Vue/vue生命周期.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue生命周期.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Vue/webpack功能.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/call&amp;apply&amp;bind.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/call&amp;apply&amp;bind.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/js多继承实现.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/new.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/new.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/this.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/this.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/面向对象.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/面向对象.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/Vue/vue生命周期.png" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue生命周期.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/堆 栈 数组.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/堆 栈 数组.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QnA/1.md" beforeDir="false" afterPath="$PROJECT_DIR$/QnA/1.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,6 +132,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="$PROJECT_DIR$/../.nvm/versions/node/v0.12.8/bin/node" />
@@ -272,6 +235,9 @@
       <workItem from="1622706390487" duration="115005000" />
       <workItem from="1625037013163" duration="50407000" />
       <workItem from="1627524128475" duration="599000" />
+      <workItem from="1661746339194" duration="18609000" />
+      <workItem from="1661841570474" duration="59000" />
+      <workItem from="1661841663133" duration="1898000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1561018249719</created>

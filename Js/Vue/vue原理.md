@@ -121,6 +121,7 @@ let proxyObj = new Proxy(obj, {
 ````
 
 + Vue的数据为什么频繁变化但只会更新一次
+
 ![](../../img/vue异步渲染.png)
 ````
 检测到数据变化

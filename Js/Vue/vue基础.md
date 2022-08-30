@@ -36,7 +36,14 @@ key 是给每一个 vnode 的唯一 id,依靠 key,我们的 diff 操作可以更
 + v-if v-show
 ````
     - v-if 判断结构是否加载的一个指令（有比较大的切换开销）
+      v-if显示隐藏是将dom元素整个添加或删除；v-if切换有一个局部编译/卸载的过程，切换过程中合适地销毁和重建内部的事件监听和子组件；
+      v-if是真正的条件渲染，它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。只有渲染条件为假时，并不做操作，直到为真才渲染
+      v-if由false变为true的时候，触发组件的beforeCreate、create、beforeMount、mounted钩子，由true变为false的时候触发组件的beforeDestory、destoryed方法
+      
     - v-show 判断结构是否显示的一个指令（有比较大的初始加载开销）
+      v-show隐藏则是为该元素添加css--display:none，dom元素依旧还在。
+      v-show 由false变为true的时候不会触发组件的生命周期
+      
 ````
 
 + Vue 组件间通信有哪几种方式？
@@ -110,39 +117,6 @@ v-model 的修饰符
 .trim 自动过滤用户输入的首尾空格
 ````
 
-+ vue3的区别
-  + https://zhuanlan.zhihu.com/p/350235814
-````
-1. 按需引用使用的功能模块不再整个引用Vue整个的框架,项目打包时只会打包相应的功能模块应用体积会大大降低
-2. 生命周期钩子函数只能在 setup() 期间同步使用
-    选项 API 生命周期选项和组合式 API 之间的映射：
-    beforeCreate -> use setup()
-    created -> use setup()
-    beforeMount -> onBeforeMount
-    mounted -> onMounted
-    beforeUpdate -> onBeforeUpdate
-    updated -> onUpdated
-    beforeUnmount -> onBeforeUnmount
-    unmounted -> onUnmounted
-    errorCaptured -> onErrorCaptured
-    renderTracked -> onRenderTracked
-    renderTriggered -> onRenderTriggered
-因为 setup 是围绕 beforeCreate 和 created 生命周期钩子运行的，所以不需要显式地定义它们
-3. 使用compositionAPI，增加setup组件选项，增加ref和reactive进行响应式绑定，watch响应式写法更改，computed()计算属性的变化
-4. v-model的改变：总所周知在Vue2.0中v-model只能进行动态绑定value值的变化，
-但是在Vue3.0中v-mode可以同时绑定多个不同值的写法为v-model:xxx='变量名'，子组件需要更改绑定的值时需要使用setup函数中的第二个参数进行触发更改方法，写法为context.emit('update:xxx', false)
-5. 3.0中 v-if优先级高于v-for
-6. 自定义指令的API变更：
-    bind → beforeMount 指令绑定到元素后发生。只发生一次。
-    inserted → mounted  元素插入父 DOM 后发生。
-    beforeUpdate：新的！这是在元素本身更新之前调用的，很像组件生命周期钩子。
-    update → 移除！有太多的相似之处要更新，所以这是多余的，请改用 updated。
-    componentUpdated → updated
-    beforeUnmount：新的！与组件生命周期钩子类似，它将在卸载元素之前调用。
-    unbind -> unmounted
-7. 增加teleport：是一种能够将我们的模板移动到 DOM 中 Vue app 之外的其他位置的技术
-````
-
 + vue 中使用了哪些设计模式
 ````
   1.工厂模式 - 传入参数即可创建实例
@@ -155,10 +129,3 @@ v-model 的修饰符
   6.策略模式 策略模式指对象有某个行为,但是在不同的场景中,该行为有不同的实现方案-比如选项的合并策略
 ````
 
-+ 使用compositionAPI的特点/优点
-````
-1. 相比options API更加灵活
-2. 声明在 setup 函数内，一次组件实例化只调用一次 setup
-3. 可以将被多次复用的代码逻辑以函数形式抽取出来并使用
-4. 解决mixin命名冲突的问题 类似第3点，函数里面的变量在setup里面使用的时候可以解构重命名，解决命名冲突
-````
