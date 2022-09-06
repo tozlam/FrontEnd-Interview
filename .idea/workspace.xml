@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24195e3a-47e1-4bb4-bc10-65428946520f" name="Default" comment="commit">
-      <change afterPath="$PROJECT_DIR$/Js/Vue/vue3.md" afterDir="false" />
+    <list default="true" id="24195e3a-47e1-4bb4-bc10-65428946520f" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/ts/ts基础.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Js/Vue/vue原理.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue原理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Vue/vue基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue基础.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Vue/vue生命周期.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue生命周期.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Vue/vue生命周期.png" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue生命周期.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/堆 栈 数组.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/堆 栈 数组.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QnA/1.md" beforeDir="false" afterPath="$PROJECT_DIR$/QnA/1.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/专题.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +36,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -237,7 +235,7 @@
       <workItem from="1627524128475" duration="599000" />
       <workItem from="1661746339194" duration="18609000" />
       <workItem from="1661841570474" duration="59000" />
-      <workItem from="1661841663133" duration="1898000" />
+      <workItem from="1661841663133" duration="6579000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1561018249719</created>
@@ -246,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1561018249719</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="commit">
+      <created>1661847122245</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1661847122245</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">

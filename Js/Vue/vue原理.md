@@ -117,7 +117,7 @@ let proxyObj = new Proxy(obj, {
         return target[k] = val
     }
 })
-
+同时Proxy 并不能监听到内部深层次的对象变化，而 Vue3 的处理方式是在 getter 中去递归响应式，这样的好处是真正访问到的内部对象才会变成响应式，而不是无脑递归
 ````
 
 + Vue的数据为什么频繁变化但只会更新一次
