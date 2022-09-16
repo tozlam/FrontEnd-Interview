@@ -12,7 +12,7 @@
  
 function myNew(Ctor, ...params) {
     let obj = Object.create(Ctor.prototype); 
-    // Object.create(A)：创建一个空的对象并把A作为新对象的原型（新对象.__proto__ === A）; A只能是null或者是对类型
+    // Object.create(A)：创建一个空的对象并把A作为新对象的原型（新对象.__proto__ === A）; A只能是null或者是对象类型
     let result = Ctor.call(obj, ...params);
     if (result && (typeof result === "object" || typeof result === "function")) {
         return result

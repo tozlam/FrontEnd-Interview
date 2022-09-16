@@ -117,7 +117,7 @@ let proxyObj = new Proxy(obj, {
         return target[k] = val
     }
 })
-同时Proxy 并不能监听到内部深层次的对象变化，而 Vue3 的处理方式是在 getter 中去递归响应式，这样的好处是真正访问到的内部对象才会变成响应式，而不是无脑递归
+同时Proxy 并不能监听到内部深层次的对象变化，而 Vue3 的处理方式是在 getter 中去递归响应式，这样的好处是真正访问到的内部属性才会变成响应式，简单的可以说是按需实现响应式，减少性能消耗
 ````
 
 + Vue的数据为什么频繁变化但只会更新一次
@@ -314,13 +314,35 @@ export function nextTick(cb? Function, ctx: Object) {
 ````
 keep-alive实例会缓存对应组件的VNode,如果命中缓存，直接从缓存对象返回对应VNode
 
-第一步：获取keep-alive包裹着的第一个子组件对象及其组件名；
+第一步：获取keep-alive包裹着的（默认插槽中）第一个子组件对象及其组件名；
 第二步：根据设定的黑白名单（如果有）进行条件匹配，决定是否缓存。不匹配，直接返回组件实例（VNode），否则执行第三步；
 第三步：根据组件ID和tag生成缓存Key，并在缓存对象中查找是否已缓存过该组件实例。如果存在，直接取出缓存值并更新该key在this.keys中的位置（更新key的位置是实现LRU置换策略的关键），否则执行第四步；
 第四步：在this.cache对象中存储该组件实例并保存key值，之后检查缓存的实例数量是否超过max设置值，超过则根据LRU置换策略删除最近最久未使用的实例（即是下标为0的那个key）;
 第五步：最后并且很重要，将该组件实例的keepAlive属性值设置为true。
 
 LRU（Least recently used）算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的几率也更高”。(墨菲定律：越担心的事情越会发生)
+
+
+### 缓存后如何获取数据
+解决方案可以有以下两种：
+1. beforeRouteEnter
+每次组件渲染的时候，都会执行beforeRouteEnter
+
+beforeRouteEnter(to, from, next){
+    next(vm=>{
+        console.log(vm)
+        // 每次进入路由执行
+        vm.getData()  // 获取数据
+    })
+}
+
+2. actived
+在keep-alive缓存的组件被激活的时候，都会执行actived钩子
+activated(){
+	  this.getData() // 获取数据
+},
+注意：服务器端渲染期间avtived不被调用
+
 ````
 
 + 为什么访问data属性不需要带data
@@ -531,4 +553,5 @@ oldStartIndex跟newEndIndex进行对比 oldEndIndex跟newStartIndex进行对比
 在遍历中，如果存在key，并且满足sameVnode，会将该DOM节点进行复用，否则则会创建一个新的DOM节点
 
 ````
+![](../../img/vue-diff-2.png)
 ![](../../img/vue-diff.png)

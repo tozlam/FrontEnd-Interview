@@ -60,6 +60,13 @@ pending -> rejected
 
 并且这个状态转化是单向的，不可逆转，已经确定的状态（fulfilled/rejected）无法转回初始状态（pending）。
 
+Promise的缺点：
+● 无法取消Promise，一旦新建它就会立即执行，无法中途取消。
+● 如果不设置回调函数，Promise内部抛出的错误，不会反应到外部。
+● 当处于pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
+
+注意：在构造 Promise 的时候，构造函数内部的代码是立即执行的
+
 ## 方法
 ### Promise.prototype.then()
 Promise对象含有then方法，then()调用后返回一个`新的`Promise实例，意味着实例化后的Promise对象可以进行链式调用，而且这个then()方法可以接收两个函数，一个是处理成功后的函数，一个是处理错误结果的函数。
@@ -653,3 +660,10 @@ npm run test
   }
 
 ````
+
+#### async/await对比Promise的优势
+● 代码读起来更加同步，Promise虽然摆脱了回调地狱，但是then的链式调⽤也会带来额外的阅读负担
+● Promise传递中间值⾮常麻烦，⽽async/await⼏乎是同步的写法，⾮常优雅
+● 错误处理友好，async/await可以⽤成熟的try/catch，Promise的错误捕获⾮常冗余
+● 调试友好，Promise的调试很差，由于没有代码块，你不能在⼀个返回表达式的箭头函数中设置断点，如果你在⼀个.then代码块中使⽤调试器的步进(step-over)功能，
+调试器并不会进⼊后续的.then代码块，因为调试器只能跟踪同步代码的每⼀步。 
