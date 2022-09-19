@@ -26,9 +26,11 @@
     + 正常的普通函数执行：看函数执行前是否有"."", 有".""前面是谁this就是谁，没有"."this是window（严格模式下是undefined）
     + 匿名函数：
         + 函数表达式： 等同于普通函数机制
-        + 自执行函数: this一般是window/undefined
-        + 回调函数: this一般是window/undefined,
-    + 括号表达式：小括号中包含多项，只取最后一项，但是this受影响（window/undefined）
+        + 自执行函数: this一般是window/undefined（严格模式下是undefined）
+          创建完立即执行的函数：
+          (function(){})();~function(){}();!function(){}();+function(){}();
+        + 回调函数: this一般是window/undefined（严格模式下是undefined）,
+    + 括号表达式：小括号中包含多项，只取最后一项，但是this受影响（window/undefined（严格模式下是undefined））
 
 ````
 function fn() {
@@ -58,7 +60,11 @@ function fn(callback) {
     callback()
 }
 fn(function () {
-    console.log(this);
+    console.log(this); -> window
+})
+
+setTimeout(function() {
+  onsole.log(this); -> window
 })
 
 2
@@ -153,6 +159,7 @@ obj.fn(10); // 23
 console.log(num, obj.num); // 65 30
 
 ````
+![](../img/this-var&let.png)
 
 ## this是什么
 
@@ -167,55 +174,65 @@ console.log(num, obj.num); // 65 30
     4. 箭头函数中没有arguments实参集合（只能用rest运算符）
     
 - call/apply、bind 都是用来强制改变this指向
- - call和apply都是能够把函数执行的，在执行的时候，改变函数中的this指向；区别在于传递实参的方式不一样，call是一个个传递实参，apply需要把实参放在一个数组里面传递
- - bind不会把函数执行，而是预选处理函数中的this指向和参数
- - ````
-   绑定this指向，给函数传递参数并执行函数，返回执行结果
-   Function.prototype.call = function(context, ...params) {
-    if (context === null) { // context是null则指向window
-     context = window;
-    }
-    if (!/^(object|function)$/i.test(typeof context)) { // 如果是原始值类型的话把原始值转换成对象类型实例
-     context = Object(context);
-     // context = new context.constructor(context); 把一个原始值类型的值变成一个对象类型的实例 但是symbol和bigInt不允许 因为不能被new
-    }
-   
-    let key = Symbol('KEY'); // 唯一key
-    let result;
-    context[key] = this; // 给context对象新增key属性并指向this
-    result = context[key](...params); // 绑定参数并执行
-    delete context[key];// 给context新增的key是多余的 所以执行完了把他删除掉
-    return result;
+- call和apply都是能够把函数执行的，在执行的时候，改变函数中的this指向；区别在于传递实参的方式不一样，call是一个个传递实参，apply需要把实参放在一个数组里面传递
+- 真实项目建议用call，三个参数以上性能好一些
+- bind不会把函数执行，而是预选处理函数中的this指向和参数
+````
+获取数组最大值
+let arr = [12, 15, 32, 20];
+Math.max(arr); // NaN     Math.max要求只能一项项数值 不能直接传递数组
+Math.max(12, 15, 32, 20); // 32
+Math.max(...arr); // 32 利用ES6的展开运算符
+Math.max.apply(Math, arr); // 32 利用apply
+
+````
+- ````
+  绑定this指向，给函数传递参数并执行函数，返回执行结果
+  Function.prototype.call = function(context, ...params) {
+   if (context === null) { // context是null则指向window
+    context = window;
+   }
+   if (!/^(object|function)$/i.test(typeof context)) { // 如果是原始值类型的话把原始值转换成对象类型实例
+    context = Object(context);
+    // context = new context.constructor(context); 把一个原始值类型的值变成一个对象类型的实例 但是symbol和bigInt不允许 因为不能被new
    }
    
-   在call基础上再绑一层返回函数（预处理函数：柯里化思想）
-   Function.prototype.bind = function (context, ...params) {
-    let self = this;
-    return function (...args) {
-        let params = params.concat(args);
-        return self.call(context, ...params);
-    }
+   let key = Symbol('KEY'); // 唯一key
+   let result;
+   context[key] = this; // 给context对象新增key属性并指向this
+   result = context[key](...params); // 绑定参数并执行
+   delete context[key];// 给context新增的key是多余的 所以执行完了把他删除掉
+   return result;
+  }
+   
+  在call基础上再绑一层返回函数（预处理函数：柯里化思想）
+  Function.prototype.bind = function (context, ...params) {
+   let self = this;
+   return function (...args) {
+       let params = params.concat(args);
+       return self.call(context, ...params);
    }
+  }
    
    
    
-   var name = 'abc';
-   function A(x, y) {
-    let res = x + y;
-    console.log(res, this.name);
-   }
-   function B(x, y) {
-    let res = x - y;
-    console.log(res, this.name);
-   }
-   B.call(A, 20, 10);// 让B执行，this是A，函数的name是函数自己的名称 -> 10 'A'
-   B.call.call.call(A, 20, 10); // 让call方法执行 this是A context是20 params是[10] -> 20[key] = A; 20[key](10) -> 最后还是执行A -> NaN(10+undefined) undefined(20.name)
-   Functuon.prototype.call(A, 20, 10); -> Function.prototype是匿名空函数，啥都不会输出
-   Functuon.prototype.call.call(A, 20, 10); // NaN undefined
-   总结：
-   A.call(B,x,y) 最后是执行A，this是B,传递x和y两个参数
-   A.call.call(B,x,y);当有多个call的时候 最后是让B执行 this是x 传递值y 
-   ````
+  var name = 'abc';
+  function A(x, y) {
+   let res = x + y;
+   console.log(res, this.name);
+  }
+  function B(x, y) {
+   let res = x - y;
+   console.log(res, this.name);
+  }
+  B.call(A, 20, 10);// 让B执行，this是A，函数的name是函数自己的名称 -> 10 'A'
+  B.call.call.call(A, 20, 10); // 让call方法执行 this是A context是20 params是[10] -> 20[key] = A; 20[key](10) -> 最后还是执行A -> NaN(10+undefined) undefined(20.name)
+  Functuon.prototype.call(A, 20, 10); -> Function.prototype是匿名空函数，啥都不会输出
+  Functuon.prototype.call.call(A, 20, 10); // NaN undefined
+  总结：
+  A.call(B,x,y) 最后是执行A，this是B,传递x和y两个参数
+  A.call.call(B,x,y);当有多个call的时候 最后是让B执行 this是x 传递值y 
+  ````
 
 ````
 function Parent() {
