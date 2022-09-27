@@ -30,11 +30,17 @@
 2. 合并代码：把各个分散的模块集中打包成大文件，减少HTTP的请求链接数，配合UglifyJS可以减少、优化代码的体积。
 3. 各路插件：babel把ES6+转译成ES5-，eslint可以检查编译期的错误
 
+## webpack的能力：
++ 编译代码能力，提高效率，解决浏览器兼容问题
++ 模块整合能力，提高性能，可维护性，解决浏览器频繁请求文件的问题
++ 万物皆可模块能力，项目维护性增强，支持不同种类的前端模块类型，统一的模块化方案，所有资源文件的加载都可以通过代码控制
+
 
 ## loader和plugin
-+ loader是专门把其他类型的文件转换成webpack能认识的类型（js）
++ loader是专门把其他类型的文件转换成webpack能认识的类型（js/json）
 + Loader 本质就是一个函数，在该函数中对接收到的内容进行转换，返回转换后的结果。 因为 Webpack 只认识 JavaScript，所以 Loader 就成了翻译官，对其他类型的资源进行转译的预处理工作。
 + loader处理顺序是从右向左 从下往上
++ loader 运行在打包文件之前
 + 常见的loader：
     + css-loader是把js中的css文件翻译成webpack能认识的文件（加载 CSS，支持模块化、压缩、文件导入等特性）
     + style-loader是把能认识的css文件变成真正起作用的代码 （把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS）
@@ -44,6 +50,7 @@
   
 + Plugin 就是插件，可以扩展 Webpack 的功能，在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
 + Plugin 在 plugins 中单独配置，类型为数组，每一项是一个 Plugin 的实例，参数都通过构造函数传入。
++ plugins 在整个编译周期都起作用
 + webpack常用插件：
   + cleanWebpackPlugin： 在为生产环境编译文件的时候，先把 build或dist (就是放生产环境用的文件) 目录里的文件先清除干净，再生成新的
   + webpack.definePlugin: 允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和发布模式的构建允许不同的行为非常有用。

@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24195e3a-47e1-4bb4-bc10-65428946520f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/img/this-var&amp;let.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/函数是个渣男.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/形参赋值默认值.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/闭包作业题2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/this.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/this.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/同源策略.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/同源策略.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/事件.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/事件.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Js/函数底层运行机制.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/函数底层运行机制.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/变量提升.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/变量提升.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/面向对象.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/面向对象.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/垃圾回收机制及内存泄漏问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/垃圾回收机制及内存泄漏问题.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack/webpack功能.md" beforeDir="false" afterPath="$PROJECT_DIR$/webpack/webpack功能.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +236,7 @@
       <workItem from="1627524128475" duration="599000" />
       <workItem from="1661746339194" duration="18609000" />
       <workItem from="1661841570474" duration="59000" />
-      <workItem from="1661841663133" duration="49376000" />
+      <workItem from="1661841663133" duration="62787000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1561018249719</created>
@@ -269,7 +266,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663311745925</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="commit">
+      <created>1663583413227</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1663583413227</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
