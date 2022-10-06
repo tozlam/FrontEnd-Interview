@@ -318,9 +318,10 @@ https://zhuanlan.zhihu.com/p/30669007
 
 HMR的核心就是客户端从服务端拉去更新后的文件，准确的说是 chunk diff (chunk 需要更新的部分)。
 实际上 WDS 与浏览器之间维护了一个 Websocket，当本地资源发生变化时，WDS 会向浏览器推送更新，并带上构建时的 hash，让客户端与上一次资源进行对比。
-客户端对比出差异后(HRM.runtime)会向 WDS 发起 Ajax 请求(通过JSONP.runtime)来获取更改内容(文件列表、hash)，这样客户端就可以再借助这些信息继续向 WDS 发起 jsonp 请求获取该chunk的增量更新。
-然后HRM将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用（像react-hot-loader 和 vue-loader 都是借助这些 API 实现 HMR）。
+客户端对比出差异后(HMR.runtime)会向 WDS 发起 Ajax 请求(通过JSONP.runtime)来获取更改内容(文件列表、hash)，这样客户端就可以再借助这些信息继续向 WDS 发起 jsonp 请求获取该chunk的增量更新。
+然后HMR将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用（像react-hot-loader 和 vue-loader 都是借助这些 API 实现 HMR）。
 
+基本实现原理大致这样的，构建 bundle 的时候，加入一段 HMR runtime 的 js 和一段和服务沟通的 js 。文件修改会触发 webpack 重新构建，服务器通过向浏览器发送更新消息，浏览器通过 jsonp 拉取更新的模块文件，jsonp 回调触发模块热替换逻辑。
 ````
 
 + babel
