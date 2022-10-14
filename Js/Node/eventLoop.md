@@ -8,6 +8,13 @@
     每个阶段执行完毕后，开始执行微任务，再开始执行下一阶段的宏任务。
 ````
 
+1. timers	//处理setTimeout()和setInterval()的回调函数
+2. callbacks	//操作回调函数（除了那两个定时器）
+3. idle, prepare	//供 libuv 内部调用
+4. poll			//轮询时间，用于等待还未返回的 I/O 事件，比如服务器的回应、用户移动鼠标等等
+5. check		//执行 setImmediate() 的回调函数
+6. close callbacks		//阶段执行关闭请求的回调函数，比如 socket.on(‘close’, …)
+
 + nextTick
 ````
 是当前阶段执行调用 不属于6个阶段中的任何一个阶段

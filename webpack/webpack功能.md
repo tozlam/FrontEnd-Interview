@@ -172,7 +172,7 @@ module: {
 
 + 抽离公共代码SplitChunk
 ````
-提取公共代码，防止代码被重复打包，拆分过大的js文件，合并零散的js文件
+提取公共代码，防止代码被重复打包，拆分过大的js文件，合并零散的js文件，减少请求资源的大小和请求次数
 
 一般有两种情况需要抽离公共代码
 1. 公共模块： 公共模块的代码不需要重复打包，单独抽离成一个公共模块的文件，然后引用即可
@@ -237,6 +237,7 @@ but：每次重新打包，发现vendor的hash也变化了，vendor代码都要�
 Dll打包以后是独立存在的，只要其包含的库没有增减、升级，hash也不会变化，因此线上的dll代码不需要随着版本发布频繁更新。
 App部分代码修改后，只需要编译app部分的代码，dll部分，只要包含的库没有增减、升级，就不需要重新打包。这样也大大提高了每次编译的速度。
 假设你有多个项目，使用了相同的一些依赖库，它们就可以共用一个dll。
+DLLPlugin 它则是提前将公共的包构建出来，使得在 build 时过滤掉这些构建过的包，使得在正是构建时的速度缩短。所以其相对来说打包速度会更快。
 
 // webpack.dll.config.js
 var path = require("path");
@@ -286,6 +287,24 @@ plugins: [
   </body>
 </html>
 
+````
+
++ HardSourceWebpackPlugin
+````
+HardSourceWebpackPlugin 为模块提供中间缓存，缓存默认的存放路径是: node_modules/.cache/hard-source。
+配置 hard-source-webpack-plugin，首次构建时间没有太大变化，但是第二次开始，构建时间大约可以节约 80%。
+首先安装依赖:
+npm install hard-source-webpack-plugin -D
+
+修改 webpack 的配置：
+//webpack.config.js
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+module.exports = {
+    //...
+    plugins: [
+        new HardSourceWebpackPlugin()
+    ]
+}
 ````
 
 + 那代码分割的本质是什么？有什么意义呢？

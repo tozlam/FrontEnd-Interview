@@ -22,3 +22,6 @@ process.on('exit', (code) => {
   }, 0);
 });
 ````
+
+### nodejs是单线程还是多线程？
+主线程是单线程执行的，但node.js存在多线程执行，多线程包括setTimeout和异步I/O事件，其实nodejs还存在其他线程，包括垃圾回收、内存优化等
