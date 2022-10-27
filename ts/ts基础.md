@@ -93,6 +93,10 @@ console.log(Direction[0]); // Up
 ````
 
 ### interface和type的区别？
+interface 是接口，type 是类型别名，本身就是两个概念。只是碰巧表现上比较相似。
+希望定义一个变量类型，就用 type，如果希望是能够继承并约束的，就用 interface。 
+如果你不知道该用哪个，说明你只是想定义一个类型而非接口，所以应该用 type。
+
 1.接口(Interface)
 接口主要用于类型检查，它只是一个结构契约，定义了具有相似的名称和类型的对象结构。除此之外，接口还可以定义方法和事件。interface只能定义对象类型
 
@@ -162,7 +166,7 @@ type User = {age: number} & Person
 ````
 定义两个相同名称的接口会合并声明。
 
-定义两个同名的type会出现异常。
+定义两个同名的type会出现异常，type不可以重新赋值。
 
 interface Person { 
   name: string
@@ -171,6 +175,9 @@ interface Person {
   age: number
 }
 // 合并为:interface Person { name: string age: number}
+
+对外API建议用interface，方便扩展
+对内API建议用type，防止代码扩散
 ````
 
 ### 高级类型
@@ -364,4 +371,85 @@ T extends U ? X : Y
 1. 实例装饰器：属性装饰 -> 访问器装饰 -> 参数装饰 => 方法装饰
 2. 静态装饰器: 属性 => 访问器 => 参数 => 方法
 3. 类装饰器
+````
+
+
+### any和unknown和never
+````
+any类型，表示的是变量可以是任意类型，相当于关闭了ts的类型检测功能，
+你可以把任何值赋值给any类型的变量，并对该变量进行任何操作
+
+unknown类型，表示我不知道它的类型，相比 any，ts 会对 unknown 类型进行检查
+你可以把任何值赋给 unknwon 类型的变量，但你必须进行类型检查或类型断言才能对变量进行操作
+（unknown=所有类型的联合）
+
+never类型，表示不是任何一种类型
+
+````
+
+### 类型收窄
+````
+1. JS方法 typeof
+  缺点：只支持js基本类型，不支持ts可变类型
+2. TS方法 is 类型谓词
+ type Rect = {
+   height: number
+   width: number
+ }
+ type Circle = {
+   center: [number, number]
+   radius: number
+ }
+ 
+ const f1 = (a: Rect | Circle) => {
+   if (isRect(a)) {
+      a // Rect
+   }
+ }
+ 
+ function isRect(x: Rect | Circle): x is Rect {
+   return 'height' in x && 'width' in x
+ } 
+
+3. TS方法 x.kind
+ 通过一个变量去辨别类型
+ type Circle = {kind: 'Circle', center: [number, number]}
+ type Square = {kind: 'Square', x: number}
+ type Shape = Circle | Square
+ 
+ const f1 = (a: Shape) => {
+   if (a.kind === 'Square') {
+      a // Square
+   } else if (a.kind === 'Circle') {
+      a // Circle
+   } else {
+      a // never
+   }
+ }
+ 
+4. TS方法 断言
+ type Circle = {kind: 'Circle', center: [number, number]}
+ type Square = {kind: 'Square', x: number}
+ type Shape = Circle | Square
+ 
+ const f1 = (a: Shape) => {
+   (a as Circle) // 断言 强制收缩
+ }
+ 
+````
+
+````
+type A = {
+   name: string
+}
+const a1 = {
+   name: 'tozlam',
+   age: '18'
+}
+const a: A = a1 // 这样子是可以的 不报错的
+
+const a2: A = {
+   name: 'tozlam',
+   age: '18'
+}  // 这样写会报错 因为在声明的时候赋值会启用严格检查，只能写type里面已知属性
 ````

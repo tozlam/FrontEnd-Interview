@@ -52,7 +52,7 @@ methodsToPatch.forEach(function (method) {
     // 调用数组原始方法，并传入参数args，并将执行结果赋给result
     const result = original.apply(this, args)
     // 当数组调用重写后的方法时，this指向该数组，当该数组为响应式时，就可以获取到其__ob__属性
-    const ob = this.__ob__
+    const ob = this.__ob__ // Observer对象
     // 获取新插入的值
     let inserted
     switch (method) {
@@ -138,8 +138,9 @@ let proxyObj = new Proxy(obj, {
 ````
 computed 本质是一个惰性求值的观察者computed watcher。其内部通过 this.dirty 属性标记计算属性是否需要重新求值。
 
-当 computed 的依赖状态发生改变时,就会通知这个惰性的 watcher,computed watcher 通过 this.dep.subs.length 判断有没有订阅者,
-有的话,会重新计算,然后对比新旧值,如果变化了,会重新渲染。 (Vue 想确保不仅仅是计算属性依赖的值发生变化，而是当计算属性最终计算的值发生变化时才会触发渲染 watcher 重新渲染，本质上是一种优化。)
+当使用 computed 计算属性时，组件初始化会对每一个计算属性都创建对应的 watcher , 然后在第一次调用自己的 getter 方法时，收集计算属性依赖的所有 data，那么所依赖的 data 会收集这个订阅者。
+当 computed 的依赖状态发生改变时,就会通知这个惰性的 watcher,computed watcher会将this.dirty设置为true，然后通过 this.dep.subs.length 判断有没有订阅者,
+有的话,会再次读取computed，此时copmuted的dirty是true，所以会触发重新计算。然后对比新旧值,如果变化了,会重新渲染。 (Vue 想确保不仅仅是计算属性依赖的值发生变化，而是当计算属性最终计算的值发生变化时才会触发渲染 watcher 重新渲染，本质上是一种优化。)
 没有的话,仅仅把 this.dirty = true (当计算属性依赖于其他数据时，属性并不会立即重新计算，只有之后其他地方需要读取属性的时候，它才会真正计算，即具备 lazy（懒计算）特性。)
 
 computed擅长的场景：一个数据受多个数据影响
@@ -158,20 +159,7 @@ computed: {
 
 
 
-初始化的时候，会执行一个initComputed函数去初始化所有计算属性。
-在这个函数里面给每一个计算属性都添加了一个watcher实例
-这些watcher实例都存储到了实例的_computedWatchers这个对象中
-然后通过definedComputed函数，创建一个新的getter函数，这个getter函数是通过createComputedGetter返回的
-然后把这个计算属性挨个绑定到当前实例上
-createComputedGetter返回的getter会根据对应的watcher实例的dirty属性来决定 使用这个属性的时候应该重新计算还是使用老值
-这个dirty属性是watcher创造的一个属性 初始是true
-当页面初次渲染的时候需要使用某个计算属性 这时候会触发createComputedGetter
-由于dirty是true 所以会触发watcher的evaluate函数
-evaluate函数会根据用户编写的get来更新watcherh上的value属性 并且把dirty设置为false
-
-那么以后页面更新的时候就会去调用对应的计算属性，这个时候再触发返回createComputedGetter返回的getter
-这个时候watcher的dirty已经变成false 所以不会去触发evaluate函数 那么也就会触发用户编写的get函数
-
+https://zhuanlan.zhihu.com/p/357250216
 ````
 
 + watch
@@ -552,6 +540,36 @@ oldStartIndex跟newEndIndex进行对比 oldEndIndex跟newStartIndex进行对比
 在遍历过程中这几个变量都会向中间靠拢 当oldStartIdx > oldEndIdx或者newStartIdx > newEndIdx时结束循环
 在遍历中，如果存在key，并且满足sameVnode，会将该DOM节点进行复用，否则则会创建一个新的DOM节点
 
+
+虚拟DOM的解析过程：
+● 首先对将要插入到文档中的 DOM 树结构进行分析，使用 js 对象将其表示出来，比如一个元素对象，包含 TagName、props 和 Children 这些属性。然后将这个 js 对象树给保存下来，最后再将 DOM 片段插入到文档中。
+● 当页面的状态发生改变，需要对页面的 DOM 的结构进行调整的时候，首先根据变更的状态，重新构建起一棵对象树，然后将这棵新的对象树和旧的对象树进行比较，记录下两棵树的的差异。
+● 最后将记录的有差异的地方应用到真正的 DOM 树中去，这样视图就更新了。
+
 ````
 ![](../../img/vue-diff-2.png)
 ![](../../img/vue-diff.png)
+
++ slot是什么？有什么作用？原理是什么？
+````
+slot又名插槽，是Vue的内容分发机制，组件内部的模板引擎使用slot元素作为承载分发内容的出口。
+插槽slot是子组件的一个模板标签元素，而这一个标签元素是否显示，以及怎么显示是由父组件决定的。
+slot又分三类，默认插槽，具名插槽和作用域插槽。
+● 默认插槽：又名匿名插槽，当slot没有指定name属性值的时候一个默认显示插槽，一个组件内只有有一个匿名插槽。
+● 具名插槽：带有具体名字的插槽，也就是带有name属性的slot，一个组件可以出现多个具名插槽。
+● 作用域插槽：默认插槽、具名插槽的一个变体，可以是匿名插槽，也可以是具名插槽，
+该插槽的不同点是在子组件渲染作用域插槽时，可以将子组件内部的数据传递给父组件，让父组件根据子组件的传递过来的数据决定如何渲染该插槽。
+
+实现原理：当子组件vm实例化时，获取到父组件传入的slot标签的内容，存放在vm.$slot中，默认插槽为vm.$slot.default，
+具名插槽为vm.$slot.xxx，xxx 为插槽名，当组件执行渲染函数时候，遇到slot标签，使用$slot中的内容进行替换，
+此时可以为插槽传递数据，若存在数据，则可称该插槽为作用域插槽。
+````
+
++ Vue模版编译原理
+````
+vue中的模板template无法被浏览器解析并渲染，因为这不属于浏览器的标准，不是正确的HTML语法，所以需要将template转化成一个JavaScript函数，
+这样浏览器就可以执行这一个函数并渲染出对应的HTML元素，就可以让视图跑起来了，这一个转化的过程，就成为模板编译。模板编译又分三个阶段，解析parse，优化optimize，生成generate，最终生成可执行函数render。
+● 解析阶段：使用大量的正则表达式对template字符串进行解析，将标签、指令、属性等转化为抽象语法树AST。
+● 优化阶段：遍历AST，找到其中的一些静态节点并进行标记，方便在页面重渲染的时候进行diff比较时，直接跳过这一些静态节点，优化runtime的性能。
+● 生成阶段：将最终的AST转化为render函数字符串。
+````

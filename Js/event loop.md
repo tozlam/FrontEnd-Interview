@@ -44,7 +44,10 @@ setTimeout 1
    5. UI render
    
 ### 总结
-事件循环的顺序，决定了 JavaScript 代码的执行顺序。它从 script (整体代码) 开始第一次循环。之后全局上下文进入函数调用栈。直到调用栈清空(只剩全局)，然后执行所有的 Micro Task。当所有可执行的 Micro Task 执行完毕之后。循环再次从 Macro Task 开始，找到其中一个任务队列执行完毕，然后再执行所有的 Micro Task，在执行 Micro Task、Macro Task 的时候同样遵循 Event Loop 原则，就这样一直循环下去。
+事件循环的顺序，决定了 JavaScript 代码的执行顺序。
+它从 script (整体代码) 开始第一次循环。之后全局上下文进入函数调用栈。直到调用栈清空(只剩全局)，然后执行所有的 Micro Task。
+当所有可执行的 Micro Task 执行完毕之后。循环再次从 Macro Task 开始，找到其中一个任务队列执行完毕，
+然后再执行所有的 Micro Task，在执行 Micro Task、Macro Task 的时候同样遵循 Event Loop 原则，就这样一直循环下去。
 
 
 ### EvenLoop + promise + aysnc await

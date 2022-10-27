@@ -4,15 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24195e3a-47e1-4bb4-bc10-65428946520f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Js/性能优化.md" afterDir="false" />
+    <list default="true" id="24195e3a-47e1-4bb4-bc10-65428946520f" name="Default" comment="commit">
+      <change afterPath="$PROJECT_DIR$/Js/ES6/ESModule.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js/React/react基础.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/HTTP协议.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/HTTP协议.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Node/eventLoop.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Node/eventLoop.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/Node/node.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Node/node.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Js/浏览器底层渲染机制.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/浏览器底层渲染机制.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/HTTPS.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/HTTPS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HTML及计算机网络/同源策略.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML及计算机网络/同源策略.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/Vue/vue原理.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue原理.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/Vue/vue基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/Vue/vue基础.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/event loop.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/event loop.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/专题.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/专题.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Js/作用域.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/作用域.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Js/继承.md" beforeDir="false" afterPath="$PROJECT_DIR$/Js/继承.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack/webpack功能.md" beforeDir="false" afterPath="$PROJECT_DIR$/webpack/webpack功能.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/ts基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/ts/ts基础.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack/vite.md" beforeDir="false" afterPath="$PROJECT_DIR$/webpack/vite.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +246,7 @@
       <workItem from="1661841570474" duration="59000" />
       <workItem from="1661841663133" duration="70930000" />
       <workItem from="1665072843494" duration="26922000" />
-      <workItem from="1665739270376" duration="2873000" />
+      <workItem from="1665739270376" duration="35867000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1561018249719</created>
@@ -292,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665053595862</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="commit">
+      <created>1665744885510</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1665744885510</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
