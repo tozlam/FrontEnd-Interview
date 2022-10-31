@@ -78,7 +78,9 @@
     + 具备属性及规则校验
     + 具备状态、修改状态可以控制视图更新：setState、forceUpdate
     + 具备ref可以获取dom元素或者组件实例
-    + 具备周期函数
+    + 具备周期函数可以灵活掌控不同阶段处理不同事情
+    + 流程繁琐，渲染速度相对较慢
+    + 基于面向对象编程思想设计，更方便实现继承
     
     // Demo.jsx
     improt React from 'react';
@@ -297,4 +299,341 @@ handler = () => {
 ````
 
 + 合成事件
+````
+...
+handler = (x, y, ev) => {
+    console.log(x, y, ev)
+}
+render() {
+    return <div>
+        <button onClick={this.handler.bind(null, 10, 20)}>点击</button> 
+        // 利用bind的预处理原则 如果不用bind则在编译时候就执行了handler函数而不是点击才执行
+    </div>
+}
+
+事件的执行顺序为原生事件先执行，合成事件后执行，合成事件会冒泡绑定到 document 上，所以尽量避免原生事件与合成事件混用，如果原生事件阻止冒泡，可能会导致合成事件不执行，
+因为需要冒泡到document 上合成事件才会执行。
+
+````
+
+````
+3. Hooks组件 基于React中提供的Hook函数，可以让函数组件动态化
+基础Hook
++ useState 使用状态管理
++ useEffect 使用周期函数
++ useContext 使用上下文信息
+
+额外的Hook
++ useReducer useState的替代方案，借鉴Redux处理思想，管理更复杂的状态和逻辑
++ useCallback 构建缓存优化方案
++ useMemo 构建缓存优化方案
++ useRef 使用ref获取DOM
++ useImperativeHandle 配合forwardRef一起使用
++ useLayoutEffect 与useEffect相同，但会在所有DOM变更之后同步调用effect
+...
+````
+
++ useState
+````
+作用：在函数组件中使用状态，修改状态值可让函数组件更新，类似于类组件中的setState
+eg：const [num, setNum] = useState(10);// 返回一个state 以及更新state的函数
++ 更新state的函数不像类组件中的this.setState一样，他不支持部分状态修改
+
+...
+let [state, setState] = useState({
+    x: 10,
+    y: 20
+})
+const handler = () => {
+    setState({
+        ...state,
+        x: state.x + 1
+    })
+}
+return <div>
+    {state.x}{state.y}
+    <button onClick={handler}></button>
+</div>
+...
++ 推荐分开使用useState，实现多状态管理
+...
+let [x, setX] = useState(10), [y, setY] = useState(20)
+...
++ react18 建立了更新队列，实现批处理（修改状态方法是异步操作的）
++ react16 出现在合成事件、周期函数中的状态更新，使用的是更新队列和批处理；但是出现在其他异步操作中，更新状态的方法是同步处理的
+
++ 如果下一个方法执行的时候可以获取上个方法已经处理好的值 => 函数式更新
+...
+const handler = () => {
+    for (let i = 0; i < 10; i++) {
+        setNum(num => {
+            return num + 1;
+        })
+    }
+}
+...
++ 可以基于flushSync刷新渲染队列
+
++ 惰性初始state
+如果初始state需要通过复杂计算获得，可以传入一个函数，在函数中计算并返回初始的state，此函数只在初始渲染时被调用
+...
+export default function demo(props) {
+    let [num, setNum] = useState(() => {
+        let {x, y} = props;
+        return x + y
+    })
+}
+...
+
++ 性能优化
+调用state hook的更新函数，并传入当前state时(更新的值跟当前的值一样)，react将跳过组件的渲染（函数不会执行）（因为react使用Object.is比较算法来比较新老state，不是因为dom-diff!）
+【类组件中，当新老状态值相同，在没有设置shouldComponentUpdate或者继承pureComponent的前提下，render还会执行，重新生成新的虚拟dom，只不过和之前的虚拟dom一模一样，不需要更新真实dom】
+````
+
++ useEffect
+````
+作用： 在函数组件中使用生命周期函数
+useEffect只能出现在函数组件的最外层，不能嵌套在判断、循环等操作中
+
+...
+// 第一次渲染完 && 每一次更新完 触发更新
+useEffect(() => {
+    console.log()
+})
+...
+...
+// 第一次渲染完 触发更新
+useEffect(() => {
+    console.log()
+}, []) // 没填依赖项
+...
+...
+// 第一次渲染完 && num状态改变 触发更新
+useEffect(() => {
+    console.log()
+}, [num]) // 依赖项为num
+...
+
+...
+let [data, setData] = useState([])
+// 第一次渲染完成 从服务器获取数据
+useEffect(() => {
+    queryData().then(value => {
+        setData(value)
+    })
+}, [])
+...
+...
+let [data, setData] = useState([])
+// 第一次渲染完成 从服务器获取数据
+useEffect(() => {
+    const next = async () => {
+        let result = await queryData();
+        setData(result);
+    }
+    next();
+}, [])
+// 不可以直接将async/await写在useEffect的callback函数上面
+...
+
+useEffect里面的callback的return相当于vue里面的unmounted，是在销毁后执行的
+
+useEffect原理：
+函数组件在渲染/更新期间，遇到useEffect操作，会基于MountEffect方法把callback和依赖项加入到effect链表中
+
+在视图渲染完毕后，基于UpdateEffect方法，通知链表中的方法执行
+1. 按照顺序执行期间，首先会检测依赖项的值是否有更新【有容器专门记录上一次依赖项的值】；有更新则把对应callback执行，没有则继续处理下一项
+2. 遇到依赖项是空数组的，则只在第一次渲染完毕时，执行相应的callback
+3. 遇到没有设置依赖项的，则每一次渲染完毕时都执行相应的callback
+
+
+````
+
++ useLayoutEffect
+````
+useEffect向effect链表中增加的callback函数，会在真实dom已经彻底渲染完毕后触发执行
+useLayoutEffect向effect链表中增加的callback函数，在视图编译完，还没有渲染真实dom之前，触发执行
+````
+
++ useRef
+````
+在函数组件中，可以基于useRef获取dom元素
+类似的方法有：
+1. ref = {x => this.box = x}
+2. React.creatRef 
+
++ creatRef每次渲染都会返回一个新的引用
++ useRef每次都会返回相同的引用
+
++ 如果子组件是个类组件，我们为其设置ref，最后获取的是子组件的实例【可以调用子组件商提供的属性和方法】
++ 函数子组件不能直接为其设置ref（会报错）；可以用forwardRef函数包起来
+
+
++ useImperativeHandle可以在让你使用ref时自定义暴露给父组件的实例值（与forwardRef一起使用），实现ref转发
+基于forwardRef和useImperativeHandle就可以实现父组件调用子组件中的方法
+...
+const Child = forwardRef(function Child (props, ref) {
+    const submit = () => {}
+    
+    useImperativeHandle(ref, () => {
+        return {
+            submit,
+            name: 'Child'
+        }
+    }); // 实现父组件调用子组件中的方法
+    return <div>
+    </div>
+});
+export default function Demo() {
+    const box = useRef(null);
+    
+    useEffect(() => {
+        box.current.submit();
+    })
+    
+    return <div>
+        <Child ref={box} />
+    </div>
+}
+...
+
+````
+
++ useMemo
+````
+实现数据的缓存
+场景：视图需要呈现的内容是经过复杂且大量消耗性能的计算得来的
+
+...
+let [x, setX] = useState(10);
+let [y, setY] = useState(20);
+
+const cacheVal = useMemo(() => {
+    // 经过复杂的计算 依赖于x
+    return x
+}, [x])
+
+return <div>
+    <span>{cacheVal}</span>
+    <button onClick={() => setX(x + 1)}>修改x</button>
+    <button onClick={() => setY(y + 1)}>修改y</button>
+  </div>
+...
+
+````
+
++ useCallback
+````
+构建缓存的优化
+主要用于父子组件嵌套，父组件会基于属性把方法传递给子组件
+useCallback可以保证父组件（函数组件）每次更新不会创建新的函数堆，而是获取之前的函数引用，这样传递给子组件的函数值不会变化；
+(如果子组件做了优化，例如pureComponent、memo...，则可以避免子组件的无效更新，节约性能)
+
+pureComponent与useCallback
+...
+class Child1 extends React.pureComponent {
+    render() {
+        return <div>
+            <button onClick={this.props.handler}>处理1</button>
+        </div>
+    }
+}
+
+class Child2 extends React.pureComponent {
+    render() {
+        return <div>
+            <button onClick={this.props.handler}>处理2</button>
+        </div>
+    }
+}
+
+
+export default function Demo () {
+    let [num, setNum] = useState(0)
+    
+    // 第一次执行，创建函数堆 0x001
+    // 第二次执行，不会创建新的函数，用的还是之前的值 0x001
+    const handler1 = useCallback(() => {
+        
+    }, []);
+    
+    // 第一次执行，创建函数堆 0x002
+    // 第二次执行，创建函数堆 0x003
+    const handler2 = () => {
+        
+    };
+    
+    
+    return <div>
+        <Child1 handler={handler1}/>
+        <Child2 handler={handler2}/>
+    </div>
+}
+...
+
+memo与useCallback
+...
+const Child1 = memo(function Child1(props) {
+    return <div>
+        <button onClick={props.handler}>处理</button>
+    </div>
+})
+export default function Demo () {
+    let [num, setNum] = useState(0)
+    
+    // 第一次执行，创建函数堆 0x001
+    // 第二次执行，不会创建新的函数，用的还是之前的值 0x001
+    const handler1 = useCallback(() => {
+        
+    }, []);
+ 
+    return <div>
+        <Child1 handler={handler1}/>
+    </div>
+}
+
+
+....
+````
+
++ 自定义Hook
+````
+使用自定义Hook可以将某些组件逻辑提取到可重用的函数中
+
+...
+// 自定义Hook：提供公共的操作和逻辑
+const usePartState = function usePartState(initial) {
+    let [state, setState] = useState(initial);
+    
+    const setPartState = (partState) => {
+        setState({
+            ...state,
+            ...partState
+        })
+    }
+    return [state, setPartState]
+}
+
+export default function Demo(props) {
+    let [state, setState] = usePartState({
+        x: 10,
+        y: 20
+    })
+    const handler = () => {
+        setState({
+            x: state.x + 10
+        })
+    }
+    
+    return <div>
+        <span>{state.x}</span>
+        <span>{state.y}</span>
+        <button onClick={handler}>处理</button>
+    </div>
+}
+...
+
+````
+
+
 

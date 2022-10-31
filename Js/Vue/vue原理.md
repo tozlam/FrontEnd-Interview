@@ -138,9 +138,10 @@ let proxyObj = new Proxy(obj, {
 ````
 computed 本质是一个惰性求值的观察者computed watcher。其内部通过 this.dirty 属性标记计算属性是否需要重新求值。
 
-当使用 computed 计算属性时，组件初始化会对每一个计算属性都创建对应的 watcher , 然后在第一次调用自己的 getter 方法时，收集计算属性依赖的所有 data，那么所依赖的 data 会收集这个订阅者。
+当使用 computed 计算属性时，组件初始化会对每一个计算属性都创建对应的 watcher , 然后在第一次调用自己的 getter 方法时，收集计算属性依赖的所有data，那么所依赖的 data 会收集这个订阅者。
 当 computed 的依赖状态发生改变时,就会通知这个惰性的 watcher,computed watcher会将this.dirty设置为true，然后通过 this.dep.subs.length 判断有没有订阅者,
-有的话,会再次读取computed，此时copmuted的dirty是true，所以会触发重新计算。然后对比新旧值,如果变化了,会重新渲染。 (Vue 想确保不仅仅是计算属性依赖的值发生变化，而是当计算属性最终计算的值发生变化时才会触发渲染 watcher 重新渲染，本质上是一种优化。)
+有的话,会再次读取computed，此时copmuted的dirty是true，所以会触发重新计算。然后对比新旧值,如果变化了,会重新渲染。 
+(Vue 想确保不仅仅是计算属性依赖的值发生变化，而是当计算属性最终计算的值发生变化时才会触发渲染 watcher 重新渲染，本质上是一种优化。)
 没有的话,仅仅把 this.dirty = true (当计算属性依赖于其他数据时，属性并不会立即重新计算，只有之后其他地方需要读取属性的时候，它才会真正计算，即具备 lazy（懒计算）特性。)
 
 computed擅长的场景：一个数据受多个数据影响

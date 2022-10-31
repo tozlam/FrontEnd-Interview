@@ -453,3 +453,64 @@ const a2: A = {
    age: '18'
 }  // 这样写会报错 因为在声明的时候赋值会启用严格检查，只能写type里面已知属性
 ````
+
+### 抽象类
+````
+关键字abstract
+抽象类不允许被实例化，抽象类的存在只为了向子类服务
+抽象类中包含抽象属性/方法，和普通属性/方法
+被抽象的属性/方法不允许拥有具体的内容
+子类如果不是抽象类，就必须将所有抽象父类的方法/属性具体化
+
+ 1 /* ts中类抽象类、多态
+ 2 * 抽象类: abstract 修饰， 里面可以没有抽象方法。但有抽象方法(abstract method)的类必须声明为抽象类(abstract class)
+ 3 * 多态:父类定义一个方法不去实现，让继承它的子类去实现  每一个子类有不同的表现
+ 4 * 注意：使用多态基础是类的继承或者接口实现
+ 5 * */
+ 6  
+ 7 /**
+ 8  * Animal 是一个抽象类，里面含有一个eat()抽象方法
+ 9  */
+10 abstract class Animal{
+11     public name:string;
+12     constructor(name:string){
+13         this.name=name;
+14     }
+15  
+16     //抽象方法 ，不包含具体实现，要求子类中必须实现此方法
+17     abstract eat():any;
+18  
+19     //非抽象方法，无需要求子类实现、重写
+20     run(){
+21         console.log('非抽象方法，不要子类实现、重写');
+22     }
+23 }
+24  
+25 class  Dog extends Animal{
+26  
+27     //子类中必须实现父类抽象方法，否则ts编译报错
+28     eat(){
+29        return this.name+"吃肉";
+30     }
+31 }
+32  
+33 class Cat extends Animal{
+34  
+35     //子类中必须实现父类抽象方法，否则ts编译报错
+36     eat(){
+37         return this.name+"吃鱼";
+38     }
+39 }
+40  
+41 var dog =new Dog("tom");
+42 var cat=new Cat("kitty");
+43 console.log(dog.eat());
+44 console.log(cat.eat());
+45  
+46 //多态 ，一种事物的不同表现形态。如下面的代码中 先声明变量f是Animal类型，具体是Dog还是Cat，在new 对象时才知道
+47 //如果是Dog，则f.eat()调用的是Dog类中的eat方法；如果是Cat，则f.eat()调用的是Cat类中的eat方法，这就是多态！！！
+48 var f:Animal;//声明变量为Animal类型
+49 //f=new Dog("sunny");
+50 f=new Cat("sunny");
+51 console.log(f.eat());
+````
