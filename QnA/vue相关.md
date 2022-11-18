@@ -63,6 +63,43 @@ function render() {
 render();
 ````
 
+### proxy和Object.defineProperty
++ proxy是直接监听对象 而非属性，Object.defineProperty只能对对象的某个属性进行劫持
++ proxy可以直接监听数组的变化（proxy对不可配置的属性保持不变的语义），Object.defineProperty监听不到数组length的变化（因为length 属性的configurable是false，是不可以被改变的）
++ Proxy有多达13种拦截方法,不限于apply、ownKeys、deleteProperty、has等等 Object.defineProperty不具备
+````
+var proxy = new Proxy({}, {
+  get: function(target, property) {
+    return 35;
+  }
+});
+
+proxy.time // 35
+proxy.name // 35
+proxy.title // 35
+
+
+//要劫持的对象
+const data = {
+    name:''
+}
+  //遍历对象,对其属性值进行劫持
+  Object.keys(data).forEach(function(key){
+    Object.defineProperty(data,key,{
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            console.log('get');
+          },
+          set: function(newVal) {
+            // 当属性值发生变化时我们可以进行额外操作
+            console.log(`我修改了成了${newVal}`);           
+          },
+    })
+  })
+  data.name = 'gg'
+````
+
 ### vue.set()是如何实现的？
 我们给对象和数组本身都增加了dep属性，当给对象新增不存在的属性则触发对象依赖的watcher去更新，当然修改数组索引时我们调用数组本身的splice方法去更新数组
 

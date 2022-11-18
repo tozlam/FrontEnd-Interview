@@ -529,6 +529,7 @@ return <div>
 useCallback可以保证父组件（函数组件）每次更新不会创建新的函数堆，而是获取之前的函数引用，这样传递给子组件的函数值不会变化；
 (如果子组件做了优化，例如pureComponent、memo...，则可以避免子组件的无效更新，节约性能)
 
+类组件：
 pureComponent与useCallback
 ...
 class Child1 extends React.pureComponent {
@@ -571,6 +572,7 @@ export default function Demo () {
 }
 ...
 
+Hook函数式组件：
 memo与useCallback
 ...
 const Child1 = memo(function Child1(props) {
@@ -635,5 +637,761 @@ export default function Demo(props) {
 
 ````
 
++ 组件通信
+1. 基于props属性，实现父子（或兄弟）组件间通信
+````
+class Vote extends React.Component {
+    state = {
+        supNum: 10,
+        oppNum: 5
+    }
+    // 修改状态的方法：箭头函数可以保证方法中的this永远是父组件的实例
+    change = type => {
+        let {supNum, oppNum} = this.state
+        if (type === 'sup') {
+            this.setState({supNum: supNum+1})
+            return
+        }
+        this.setState({oppNum: oppNum+1})
+    }
+    render() {
+        let {supNum,oppNum} = this.state
+        return <div>
+            <header>
+                <h2>!!!</h2>
+                <span>{supNum + oppNum}人</span>
+            </header>
+            <VoteMain supNum={supNum} oppNum={oppNum} />
+            <VoteFooter change={this.change} />
+        </div>
+    }
+}
 
+class VoteMain extends React.Component {
+    static defaultPros = {
+        supNum: 0,
+        oppNum: 0
+    }
+    static propTypes = {
+        supNum: PropTypes.number,
+        oppNum: PropTypes.number,
+    }
+    render() {
+        let {supNum, oppNum} = this.props
+        let ratio = '-', total = supNum + oppNum;
+        if (total > 0) {
+            ratio = (supNum / total * 100).toFixed(2) + '%'
+        }
+        return <div>
+            <p>支持人数：{supNum}人</p>
+            <p>反对人数：{oppNum}人</p>
+            <p>支持比例：{ratio}</p>
+        </div>
+    }
+}
+class VoteFooter extends React.Component {
+    
+    static propTypes = {
+        change: PropTypes.func.isRequired,
+    }
+    render() {
+        let {change} = this.props
+        return <div>
+            <button onClick={change.bind(null, 'sup')}>支持</button>
+            <button onClick={change.bind(null, 'opp')}>反对</button>
+        </div>
+    }
+}
+````
+````
+const Vote = function Vote()  {
+   
+    let [supNum, setSupNum] = useState(10),
+    let [oppNum, setOppNum] = useState(5)
+    
+    // 修改状态的方法：箭头函数可以保证方法中的this永远是父组件的实例
+    change = useCallback(type => {
+        if (type === 'sup') {
+           setSupNum(supNum+1)
+           return
+        }
+        setOppNum(oppNum+1)
+    }, [supNum,oppNum]) // 用useCallback
+    
+        return <div>
+            <header>
+                <h2>!!!</h2>
+                <span>{supNum + oppNum}人</span>
+            </header>
+            <VoteMain supNum={supNum} oppNum={oppNum} />
+            <VoteFooter change={change} />
+        </div>
+    
+}
+
+const VoteMain = function VoteMain(props) {
+        let {supNum, oppNum} = props
+        let ratio = useMemo(() => {
+            let total = supNum + oppNum;
+            return total > 0 ? (supNum / total * 100).toFixed(2) + '%' : '--'
+        }, [supNum, oppNum])
+        return <div>
+            <p>支持人数：{supNum}人</p>
+            <p>反对人数：{oppNum}人</p>
+            <p>支持比例：{ratio}</p>
+        </div>
+}
+VoteMain.defaultPros = {
+        supNum: 0,
+        oppNum: 0
+    }
+VoteMain.propTypes = {
+        supNum: PropTypes.number,
+        oppNum: PropTypes.number,
+    }  
+    
+export default memo(VoteMain)
+    
+const VoteFooter = function VoteFooter(props) {
+        let {change} = props
+        return <div>
+            <button onClick={change.bind(null, 'sup')}>支持</button>
+            <button onClick={change.bind(null, 'opp')}>反对</button>
+        </div>
+}
+VoteFooter.propTypes = {
+        change: PropTypes.func.isRequired,
+    }
+export default memo(VoteFooter); // 用memo包起来做缓存
+````
+2. 基于context上下文，实现祖先/后代（或平行）组件间的通信（比较少用）
+````
+import ThemeContext from '@/ThemeContext';
+const Vote = function Vote()  {
+   
+    let [supNum, setSupNum] = useState(10),
+    let [oppNum, setOppNum] = useState(5)
+    
+    change = type => {
+        if (type === 'sup') {
+           setSupNum(supNum+1)
+           return
+        }
+        setOppNum(oppNum+1)
+    }
+    
+        return <ThemeContext.Provider value={{
+            supNum, oppNum, change
+        }}>
+        <div>
+            <header>
+                <h2>!!!</h2>
+                <span>{supNum + oppNum}人</span>
+            </header>
+            <VoteMain supNum={supNum} oppNum={oppNum} />
+            <VoteFooter change={change} />
+        </div>
+        </ThemeContext.Provider>
+    
+}
+...
+
+...
+const VoteMain = function VoteMain(props) {
+        // 基于useContext这个HookApi 从上下文中获取信息
+        let {supNum, oppNum} = useContext(ThemeContext)
+        let ratio = useMemo(() => {
+            let total = supNum + oppNum;
+            return total > 0 ? (supNum / total * 100).toFixed(2) + '%' : '--'
+        }, [supNum, oppNum])
+        return <div>
+            <p>支持人数：{supNum}人</p>
+            <p>反对人数：{oppNum}人</p>
+            <p>支持比例：{ratio}</p>
+        </div>
+}
+export default memo(VoteMain)
+...
+
+...
+const VoteFooter = function VoteFooter(props) {
+        let {change} = useContext(ThemeContext)
+        return <div>
+            <button onClick={change.bind(null, 'sup')}>支持</button>
+            <button onClick={change.bind(null, 'opp')}>反对</button>
+        </div>
+}
+export default memo(VoteFooter); // 用memo包起来做缓存
+...
+````
++ 在真实项目中：
+  + 父子通信（或具备相同父亲的兄弟组件），我们一般都是基于props属性传递
+  + 其他组件之间的通信，我们都是基于redux/react-redux或者mobx去实现
+
+
++ 单向数据流
+1. 理解一：属性的传递方向是单向的
+   + 父组件可基于属性把信息传给子组件
+   + 子组件无法基于属性给父组件传递信息；但可以把父组件传递的方法执行，从而实现子改父
+2. 理解二：关于生命周期函数的延续
+   + 组件第一次渲染：
+     + 父willMount -> 父render
+     + 子willMount -> 子render -> 子didMount
+     + 父didMount
+   + 组件更新：
+     + 父shouldUpdate -> 父willUpdate -> 父render
+     + 子willReciveProps -> 子shouldUpdate -> 子willUpdate -> 子render -> 子didUpdate
+     + 父didUpdate
+   
++ redux & react-redux
++ ![img.png](redux流程.png)
+````
+...
+// store/index.js
+import {creatStore} from 'redux'
+
+// 初始状态
+let initialState = {
+    supNum: 10,
+    oppNum: 5
+}
+// 创建reducer：统一修改公共状态
+// reducer中会基于派发的行为表示不同，修改不同的公共状态【reducer判断中用到的行为标识，一定要和每一次派发时传递的行为标识对应上】
+const reducer = function reducer(state = initialState, action) {
+    // state:容器中的公共状态（第一次派发没有公共状态的时候，我们让其等于初始状态）
+    // action: 每一次派发任务，传递进来的行为对象【必须要包含一个type属性（行为标识），其余可根据需求传递其他信息进来】
+
+    // 可以对state先进行一次深克隆，避免修改过程中影响到现在的公共状态
+    state = _.clone(true, state)
+    
+    let { type, payload = 1 } = action;
+    
+    switch(type) {
+        case 'VOTE_SUP':
+            state.supNum += payload;
+            break;
+        case 'VOTE_OPP':
+            state.oppNum += payload;
+            break;    
+    }
+    
+    // return的值会替换现有公共状态的信息
+    return state;
+    
+}
+
+// 创建store
+const store = creatStore(reducer)
+
+export default store
+...
+...
+// ThemeContext.js 上下文对象
+
+import {createContext} from 'react'
+const ThemeContext = createContext();
+export default ThemeContext;
+
+...
+...
+//index.jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import Vote from '@/views/Vote'
+// 注册store到上下文中
+import store from './store'
+import ThemeContext from './ThemeContext'
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.render(
+    <ThemeContext.Provider value={{store}}>
+        <Vote/>
+    </ThemeContext.Provider>
+)
+...
+
+...
+// Vote.jsx
+
+import React, {useContext, useState, useEffect} from 'react'
+
+const Vote = function Vote() {
+    const {store} = useContext(ThemeContext)
+    let {supNum} = store.getState()
+    
+    // 把组件更新的方法加入到事件池中
+    let [_,setRandom] = useState(0)
+    useEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            // 赋值一个时间戳让视图更新
+            setRandom(+ new Date())
+        })
+        // unsubscribe() 可以把刚才注入到事件池中的方法移除
+        // unsubscribe()
+    }, [])
+    
+    
+    return <div>
+        <p>{supNum}</p>
+        <button onClick={() => { store.dispatch({type: 'VOTE_SUP', payload: 10}) }}
+    </div>
+}
+...
+````
++ redux工程化
+    + redux工程化其实就是“按模块划分”
+````
++ store
+    + actions // 派发行为对象的分模块管理
+        + index.js
+        + voteActions.js
+    + reducers // reducer的模块化管理
+        + index.js
+        + voteReducer.js 
+    + action-types.js // 派发行为标识的统一管理
+    + index.js
+    
+    
+// action-types.js
+/*
+对派发的行为标识进行统一管理 
+  + 最大几率保证派发和判断的一致性
+  + 防止派发行为标识出现冲突问题
+*/
+export const VOTE_SUP = 'VOTE_SUP';
+export const VOTE_OPP = 'VOTE_OPP';
+
+
+// voteReducer.js
+import { VOTE_SUP, VOTE_OPP } from '../action-types';
+import _ from '@/assets/utils';
+let initialState = {
+    supNum: 10,
+    oppNum: 5
+};
+export default function voteReducer(state = initialState, action) {
+    state = _.clone(true, state);
+    let { type, payload = 1 } = action;
+    switch (type) {
+        case VOTE_SUP:
+            state.supNum += payload;
+            break;
+        case VOTE_OPP:
+            state.oppNum += payload;
+            break;
+        default:
+    }
+    return state;
+};
+
+
+// reducers/index.js
+/* 把各个板块的reducer合并在一起 */
+import { combineReducers } from 'redux';
+import voteReducer from './voteReducer';
+import personReducer from './personReducer';
+
+/* 
+ 公共状态也开始按照模块进行划分
+   state
+     + vote
+        + supNum
+        + oppNum
+     + person
+        + info
+ */
+const reducer = combineReducers({
+    vote: voteReducer,
+    person: personReducer
+});
+export default reducer;
+
+
+// voteAction.js
+/* Vote版块下派发行为对象的管理 */
+import { VOTE_SUP, VOTE_OPP } from '../action-types';
+const voteAction = {
+    support(payload) {
+        return {
+            type: VOTE_SUP,
+            payload
+        };
+    },
+    oppose() {
+        return {
+            type: VOTE_OPP
+        };
+    }
+};
+export default voteAction;
+
+
+// actions/index.js
+/* 把各版块的action合并为一个 */
+import voteAction from "./voteAction";
+import personAction from "./personAction";
+
+const actions = {
+    vote: voteAction,
+    person: personAction
+};
+export default actions
+
+
+// index.js
+import { createStore } from 'redux';
+import reducer from './reducers';
+
+/* 创建STORE */
+const store = createStore(reducer);
+export default store;
+
+
+//在组件中需要修改的地方
+// 获取指定模块的状态
+let { supNum, oppNum } = store.getState().vote;
+
+// 派发任务的时候
+import actions from '@/store/actions';
+...
+store.dispatch(actions.vote.support(10));
+store.dispatch(actions.vote.oppose());
+````
+````
+// 原理：并不会把每个板块的reducer合成一个，而是创建一个新的reducer出来；当每一次派发任务的时候，都会执行新的reducer，而我们在这里，把每个版块的reducer都执行，获取每个版块最新的状态，最后替换容器中的总状态！！
+const combineReducers = function combineReducers(reducers) {
+    let reducerKeys = Reflect.ownKeys(reducers); //['vote','person']
+    return function combination(state = {}, action) {
+        // 合并后的reducer，后期再派发任务，是直接派发给这个函数的
+        // 我们在这里可以把各个版块的reducer执行：把这个版块的状态和派发的对象传递进去、接收这个版块的返回值(这个版块的最新状态)，覆盖容器中的状态即可！！
+        let nextState = {};
+        reducerKeys.forEach(key => {
+            let reducer = reducers[key]; //获取各个板块的reducer
+            nextState[key] = reducer(state[key], action);
+        });
+        return nextState;
+    };
+}; 
+````
++react-redux
+    + 让redux在react项目中可以更简单的调用！
+````
+// Provider：把store注册到上下文中
+
+import store from './store';
+import { Provider } from 'react-redux';
+
+root.render(
+  <Provider store={store}>
+    <Vote />
+  </Provider>
+);
+
+// connect：把公共状态和派发任务当做属性传递给属性
+自动获取上下文中的store
+自动把“让组件更新的方法”注册到store事件池中
+mapStateToProps
+mapDispatchToProps
+
+// vote.jsx
+import { connect } from 'react-redux';
+const Vote = function Vote(props) {
+    let { supNum, oppNum } = props;
+    return <div className="vote-box">
+        ...
+    </div>;
+};
+export default connect(
+    state => {
+        return state.vote;
+    }
+)(Vote);
+
+
+// voteFooter.jsx
+import actions from '@/store/actions';
+import { connect } from 'react-redux';
+const VoteFooter = function VoteFooter(props) {
+    let { support, oppose } = props;
+    return <div className="footer">
+        <button onClick={support}>支持</button>
+        <button onClick={oppose}>反对</button>
+    </div>;
+};
+export default connect(
+    null,
+    dispatch => {
+        return {
+            support() {
+                dispatch(actions.vote.support(10));
+            },
+            oppose() {
+                dispatch(actions.vote.oppose());
+            }
+        }
+    }
+)(VoteFooter);
+
+// 或者
+<button onClick={support.bind(null, 10)}>支持</button>
+export default connect(
+    null,
+    actions.vote
+)(VoteFooter);
+````
+````
+// react-redux源码
+
+import { createContext, useContext, useMemo, useState, useLayoutEffect } from 'react';
+import { bindActionCreators } from 'redux';
+
+const ThemeContext = createContext();
+
+// provider
+export function Provider(props) {
+    return (
+        <ThemeContext.Provider value={{ store: props.store }} >
+            {props.children}
+        </ThemeContext.Provider>
+    )
+};
+
+// connect
+// React高阶组件：基于闭包管理组件
+export function connect(mapStateToProps, mapDispatchToProps) {
+    if (!mapStateToProps) {
+        mapStateToProps = function mapStateToProps() {
+            return {}
+        }
+    }
+    if (!mapDispatchToProps) {
+        mapDispatchToProps = function mapDispatchToProps() {
+            return {}
+        }
+    }
+    return function HOC(Component) {
+        // Component:我最后要渲染的组件 
+        // Proxy:是供别人调用的组件  props是调用这个组件传递的属性
+        return function Proxy(props) {
+            // 获取store
+            let {store} = useContext(ThemeContext),
+                {getState, dispatch, subscribe} = store;
+                
+            let state = getState();
+            let stateProps = useMemo(() => {
+               return mapStateToProps(state)
+            }, [state])
+            
+            let dispatchToProps = useMemo(() => {
+                if (typeof mapDispatchToProps === 'function') {
+                    return mapDispatchToProps(dispatch)
+                }
+            }, [dispatch])
+            
+             // 向事件池中注入让组件更新的办法 
+            const [, forceUpdate] = useState(0)
+            useLayoutEffect(() => {
+                return subscribe(() => forceUpdate(+new Date())) 
+            }, [subscribe])
+            
+            return <Component {...props} {...stateProps} {...dispatchToProps} />
+        }
+    }
+}
+````
+
++ 样式私有化方案
+````
+1. 内联样式
+内联样式就是在JSX元素中，直接定义行内的样式
+
+// 调用组件的时候 <Demo color="red" />
+import React from 'react';
+const Demo = function Demo(props) {
+    const titleSty = {
+        color: props.color,
+        fontSize: '16px'
+    };
+    const boxSty = {
+        width: '300px',
+        height: '200px'
+    };
+    return <div style={boxSty}>
+        <h1 style={titleSty}>珠峰培训</h1>
+        <h2 style={{ ...titleSty, fontSize: '14px' }}>珠峰培训</h2>
+    </div>;
+};
+export default Demo;
+
+内联样式的优点：
+使用简单： 简单的以组件为中心来实现样式的添加
+扩展方便： 通过使用对象进行样式设置，可以方便的扩展对象来扩展样式
+避免冲突： 最终都编译为元素的行内样式，不存在样式冲突的问题
+
+在大型项目中，内联样式可能并不是一个很好的选择，因为内联样式还是有局限性的：
+不能使用伪类： 这意味着 :hover、:focus、:actived、:visited 等都将无法使用
+不能使用媒体查询： 媒体查询相关的属性不能使用
+减低代码可读性： 如果使用很多的样式，代码的可读性将大大降低
+没有代码提示： 当使用对象来定义样式时，是没有代码提示的
+
+
+2. 使用CSS样式表
+CSS样式表应该是我们最常用的定义样式的方式！但多人协作开发中，很容易导致组件间的样式类名冲突，从而导致样式冲突；所以此时需要我们 人为有意识的 避免冲突！
+保证组件最外层样式类名的唯一性，例如：路径名称 + 组件名称 作为样式类名
+基于 less、sass、stylus 等css预编译语言的嵌套功能，保证组件后代元素的样式，都嵌入在外层样式类中！！
+// Demo.less
+.personal-box {
+    width: 300px;
+    height: 200px;
+    .title {
+        color: red;
+        font-size: 16px;
+    }
+    .sub-title {
+        .title;
+        font-size: 14px;
+    }
+}
+
+//Demo.jsx
+import React from 'react';
+import './Demo.less';
+const Demo = function Demo(props) {
+    return <div className='personal-box'>
+        <h1 className='title'>珠峰培训</h1>
+        <h2 className='sub-title'>珠峰培训</h2>
+    </div>;
+};
+export default Demo;
+
+CSS样式表的优点：
+结构样式分离： 实现了样式和JavaScript的分离
+使用CSS所有功能： 此方法允许我们使用CSS的任何语法，包括伪类、媒体查询等
+使用缓存： 可对样式文件进行强缓存或协商缓存
+易编写：CSS样式表在书写时会有代码提示
+
+当然，CSS样式表也是有缺点的：
+产生冲突： CSS选择器都具有相同的全局作用域，很容易造成样式冲突
+性能低： 预编译语言的嵌套，可能带来的就是超长的选择器前缀，性能低！
+没有真正的动态样式： 在CSS表中难以实现动态设置样式
+
+
+3. CSS Modules
+CSS的规则都是全局的，任何一个组件的样式规则，都对整个页面有效；产生局部作用域的唯一方法，就是使用一个独一无二的class名字；这就是 CSS Modules 的做法！
+第一步：创建 xxx.module.css
+.personal {
+    width: 300px;
+    height: 200px;
+}
+.personal span {
+    color: green;
+}
+.title {
+    color: red;
+    font-size: 16px;
+}
+.subTitle {
+    color: red;
+    font-size: 14px;
+}
+第二步：导入样式文件 & 调用
+import React from 'react';
+import sty from './demo.module.css';
+const Demo = function Demo() {
+    return <div className={sty.personal}>
+        <h1 className={sty.title}>珠峰培训</h1>
+        <h2 className={sty.subTitle}>珠峰培训</h2>
+        <span>珠峰培训</span>
+    </div>;
+};
+export default Demo;
+编译后的效果
+// 结构
+<div class="demo_personal__dlx2V">
+    <h1 class="demo_title__tN+WF">珠峰培训</h1>
+    <h2 class="demo_subTitle__rR4WF">珠峰培训</h2>
+    <span>珠峰培训</span>
+</div>
+
+// 样式
+.demo_personal__dlx2V {
+    height: 200px;
+    width: 300px
+}
+.demo_personal__dlx2V span {
+    color: green
+}
+.demo_title__tN\+WF {
+    color: red;
+    font-size: 16px
+}
+.demo_subTitle__rR4WF {
+    color: red;
+    font-size: 14px
+}
+
+全局作用域
+CSS Modules 允许使用 :global(.className) 的语法，声明一个全局规则。凡是这样声明的class，都不会被编译成哈希字符串。
+
+
+4. React-JSS
+JSS是一个CSS创作工具，它允许我们使用JavaScript以生命式、无冲突和可重用的方式来描述样式。JSS 是一种新的样式策略！ ​React-JSS 是一个框架集成，可以在 React 应用程序中使用 JSS。
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+const useStyles = createUseStyles({
+    personal: {
+        width: '300px',
+        height: '200px',
+        // 基于 & 实现样式嵌套
+        '& span': {
+            color: 'green'
+        }
+    },
+    title: {
+        // 使用动态值
+        color: props => props.color,
+        fontSize: '16px'
+    },
+    // 使用动态值
+    subTitle: props => {
+        return {
+            color: props.color,
+            fontSize: '14px'
+        };
+    }
+});
+const Demo = function Demo(props) {
+    const { personal, title, subTitle } = useStyles(props);
+    return <div className={personal}>
+        <h1 className={title}>珠峰培训</h1>
+        <h2 className={subTitle}>珠峰培训</h2>
+        <span>珠峰培训</span>
+    </div>;
+};
+export default Demo;
+
+但是从 react-jss 第10版本之后，不支持在类组件中使用，只能用于函数组件中！
+如果想在类组件中使用，还需我们自己处理一下！
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+const useStyles = createUseStyles({
+    ...
+});
+// 高阶组件
+const withStyles = function withStyles(Component) {
+    return function (props) {
+        const styles = useStyles(props);
+        return <Component {...styles} />;
+    };
+};
+class Demo extends React.Component {
+    render() {
+        const { personal, title, subTitle } = this.props;
+        return <div className={personal}>
+            ...
+        </div>;
+    }
+}
+export default withStyles(Demo);
+````
 
